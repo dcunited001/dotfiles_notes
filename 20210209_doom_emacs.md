@@ -51,6 +51,7 @@
 - `M-(left/right)` drag-stuff-left/right
 - `C-x (left/right)` previous/next-buffer
 - `C-x C-(left/right)` previous/next-buffer 
+- `C-c p (left/right)` projectile-(previous/next)-project-buffer
 
 - `C-c left/right` markdown-promote
 
@@ -80,6 +81,7 @@
 
 ## TODO: Configs
 
+- TODO: get projectile to show up in ibuffer
 - TODO: map `undo-redo` => `C-?`
 - TODO: reuse function keys? (most modkeys are unused)
 - TODO: configure a hyper key 
