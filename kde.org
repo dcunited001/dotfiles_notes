@@ -1,3 +1,5 @@
+* TODO this ~org~ was converted from markdown & needs cleanup
+
 * Ideas for KDE
 :PROPERTIES:
 :CUSTOM_ID: ideas-for-kde

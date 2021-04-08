@@ -1,0 +1,37 @@
+* Notes
+
+** TODO create a ~literate~ section that
+
+
+* Personal ~org-mode~ philosophy:
+
+** OKAY So I'm still a noob...
+
+... but notes/etc in this section should serve to cultivate good habits ... and to trim away habits that would seem to lead to some certain doom -- i.e. ~death by 1,000 errant TODO's~
+
+** TODO every TODO should be written to be thrown away instantly
+** TODO hmmmmm
+
+* [[./etc.org]]
+
+This should be a /mostly literate/ file declarative configuration of:
+
+** Subtrees of file-system paths for projects and languages
+** Repo URL's which should be cloned into a tree of subdirectories
+*** like the github repos of interest i've listed in various ~README.md~ files
+
+** The idea here is that I'm documenting what i'm doing so that it can be extended with minimal effort, regenerated if needed and easily found without looking
+
+* Language/Topic Locations
+
+These should include:
+
+** A file system path, relative to some global ~$DEV_HOME~ path
+** Supporting scripts for automating project checkout/sync
+*** this could either be similar to git-modules or git modules itself ... though that's entirely too much work for this.
+**** I just want lists of dumb, cloned repos that can be easily pulled if needed (and if their tree isn't in a dirty state)
+**** (github: you should probably make a "playlists" feature for git repos, where groups of repos can be checked out together, but which are meant to be used for reference only)
+***** ... unless there is some better way of doing that already
+*** some would be global (i.e. ~sync-cloned-repos~)
+*** some would be per-language or per-topic
+** These supporting scripts could be written with ~org-babel~ and with the ~tangle~ exports being written to hardlinked locations in both ~./_notes/~ and ~$LANG_HOME~
