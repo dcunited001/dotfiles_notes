@@ -1,0 +1,17 @@
+*
+!.gitignore
+!./20201015_garuda-install-notes.md
+!./20201015_helm-kubernetes.md
+!./20201017_garuda-mbp2013.md
+!./20201024_pacman-aur-repos.md
+!./20201109_krita_dev.md
+!./20201111_krita_notes.md
+!./20201230_julia_setup.md
+!./20210114_vscode_setup.md
+!./20210209_doom_emacs.md
+!./20210210_new_dotfiles.md
+!./20210310_clojure-notes.md
+!./20210403_productivity_habits.md
+!./README.org
+!./kde.org
+!./project-ideas.org
