@@ -1,7 +1,8 @@
 * Notes
 
-** TODO create a ~literate~ section that
+Some of my notes on configurations. My most recent linux installs from 3/2021 are not included.
 
+*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VA
 
 * Personal ~org-mode~ philosophy:
 
@@ -34,4 +35,12 @@ These should include:
 ***** ... unless there is some better way of doing that already
 *** some would be global (i.e. ~sync-cloned-repos~)
 *** some would be per-language or per-topic
+
 ** These supporting scripts could be written with ~org-babel~ and with the ~tangle~ exports being written to hardlinked locations in both ~./_notes/~ and ~$LANG_HOME~
+
+** _Notes_ Metaprojects
+
+These contain dotfiles/etc. For programming languages, symlinks can link back to ~/data/dev/_notes~ these docs to their
+
+*** TODO create initial symlinks for: julia, clojure, CAD
+*** TODO migrate /some/ existing notes to ~org~ using [[https://pandoc.org/installing.html][pandoc]]
