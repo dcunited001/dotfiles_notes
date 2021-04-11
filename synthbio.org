@@ -1,0 +1,51 @@
+* Synth Bio
+
+Some notes for potential exploration of synthetic bio. These notes should be
+more focused on semi-synthetic biology. Documenting this digitally makes more
+sense than doing so by hand. Org-mode has [[https://kitchingroup.cheme.cmu.edu/blog/category/orgmode/5/][functions to generate chemical structures from SMILE]]
+
+** Evolution and Natural Chemicals (i.e. essential oils, neurotransmitters, etc)
+
+First on an informal typological analysis of natural chemicals, processes and
+receptors, e.g.
+
++ what common features do these chemicals/processes share?
++ what is responsible for the diversity in natural chemicals like essential oils
+  and/or neurotransmitters?
++ what genes or processes are responsible for shaping the development &
+  recombination of terpinoids and other natural chemicals?
++ how do environmental factors further shape/inform these processes and why does it create a selective advantage for the plants/animals?
++ how do the traditional/medical applications relate to their structures?
++ how do the values/effects of these natural chemicals in plants relate to their medicinal value?
+
+Specifically, to the last question: are there chemicals which act as astringents
+in plants which are also medically useful as chemicals that produce astringent
+effects in humans? This could speak volumes on how practioners in traditional
+medicine formed ideas about _why_ some plants seemed promising for treating
+various symptoms/conditions:
+
++ e.g. the function of ginseng's adaptogenic compounds in modulating nitric
+  oxide: does nitric oxide have similar functions in plants as in humans, where
+  it increases fluid flow? ...
+
+** Emergence of Chemical Structure in Evolution is not Arbitrary
+
+What is fascinating about neurotransmitters like Serotonin and Dopamine,
+specifically, is that their value in natural organisms can be arrived at purely
+from first principles. Chiefly, they are among some of the fewest chemical structures which are guaranteed to be:
+
++ constructed from a mass-minimal number of parts (resulting from a minimal number of chemical reactions)
++ constructed from a relatively minimal number of /simple/ parts that should occur naturally in relatively high-numbers
++ produced only as products of decarboxylation or mechanisms that cannot occur in nature frequently /without enzymes/
+
+That's it. That's why every organic lifeform would find serotonin, dopamine and other neurotransmitters to be valueable: their relative occurance as modified amino acids can be controlled by amplifying/attenuating the presence/absence of enzymes. This allows organism to use their presence/absence/quantity as a kind of "variable" in genetic programs.
+
+There are other "simpicial" chemical structures as well, but there should also
+be terpenoids whose structure satisfies similar "emergence" conditions. Studying
+essential oils in detail would be illuminating.
+
+** Probabilistic Programs, Beta-Glycans and Mushrooms
+
+*** TODO port over content from my chemistry notebook on beta-glycans
++ specifically on how beta-glycans mirror objects from statitics (specifically
+  in bayesian methods)

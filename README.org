@@ -2,7 +2,7 @@
 
 Some of my notes on configurations. My most recent linux installs from 3/2021 are not included.
 
-*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VA
+*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VAg
 
 * Personal ~org-mode~ philosophy:
 
@@ -18,16 +18,20 @@ Some of my notes on configurations. My most recent linux installs from 3/2021 ar
 This should be a /mostly literate/ file declarative configuration of:
 
 ** Subtrees of file-system paths for projects and languages
+
 ** Repo URL's which should be cloned into a tree of subdirectories
 *** like the github repos of interest i've listed in various ~README.md~ files
 
+
 ** The idea here is that I'm documenting what i'm doing so that it can be extended with minimal effort, regenerated if needed and easily found without looking
+
 
 * Language/Topic Locations
 
 These should include:
 
 ** A file system path, relative to some global ~$DEV_HOME~ path
+
 ** Supporting scripts for automating project checkout/sync
 *** this could either be similar to git-modules or git modules itself ... though that's entirely too much work for this.
 **** I just want lists of dumb, cloned repos that can be easily pulled if needed (and if their tree isn't in a dirty state)
@@ -44,3 +48,4 @@ These contain dotfiles/etc. For programming languages, symlinks can link back to
 
 *** TODO create initial symlinks for: julia, clojure, CAD
 *** TODO migrate /some/ existing notes to ~org~ using [[https://pandoc.org/installing.html][pandoc]]
+*** TODO address problem where whitelisting files in gitignore doesn't work
