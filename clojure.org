@@ -1,0 +1,38 @@
+* Clojure
+
+
+
+* Clojurescript
+
+** Environment
+
+** Project Setup
+
+*** TODO learn to put together a Clojar
++ [ ] use [[https://github.com/jmmk/javascript-externs-generator/][Javascript Externs Generator]] to prep a js lib for Google Closure
++ [ ] refer to the cljsjs documentation on [[https://github.com/cljsjs/packages/wiki/Creating-Packages][Creating Packages]]
++ [ ] refer to the cljsjs documentation on [[https://github.com/cljsjs/packages/wiki/Creating-Externs][Creating Externs]]
++ [ ] create a branch & subdir in the cljsjs packages project
++ [ ] use ~ln -s~ to create a link from within ~$DEV_HOME/clojure/clojars~ to ~$DEV_HOME/clojars/cljsjs/packages/$LIB_NAME~
++ [ ] use ~unpkg~ to include a dependable ~./dist/~ build of the js lib in ~$LIB_HOME/~
++ [ ] create the directory structure for the project
++ [ ] create the externs definition
++ [ ] add ~build.boot~
++ [ ] add ~README.md~
+  
+
+*** TODO learn to push a clojar
++ [ ] Assert that the clojar libary is ready for external use
++ [ ] integrate the repo into the [[https://github.com/cljsjs/packages][cljsjs packages]] project
++ [ ] Follow the Clojars tutorial
++ [ ] build tooling(githooks?) to notify/rebuild the externs declaration & the
+  Clojar on upstream lib releases
+
+*** TODO create tooling for event-driven notifications to rebuild scripts for packages pushed to clojars
+
+i absolutely do not want to be on the hook for this shit just because i want to use a library with ClojureScript
+
+*** TODO create clojars for Uber's frameworks
++ [ ] luma-gl
++ [ ] math-gl
++ [ ] deck-gl

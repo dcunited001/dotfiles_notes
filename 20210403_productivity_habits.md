@@ -3,6 +3,23 @@
 
 - when managing emails from a webapp as a webdeveloper ... one does not simply
   fuck with people's email filters
+- Labels vs. Categories (categories can be added)
+- each label should get a color and its sublabels should get a darker tone of
+  the same hue
+
+### managing large mailboxes
+
+the main problem for me is that my mailboxes are so large, there is serious lag
+in mail clients like Thunderbird/etc.
+  
+- unsubscribe to what's not needed before it piles up
+- in a few circumstances, deleting emails is perfectly fine 
+  - on personal email ... meh, it's whatever
+  - but if done with a filter ... delete the filter
+  - i have like 150,000+ emails to deal with
+- figure out which GMail Labels are absolutely not needed on a client and set
+  them to not show on IMAP clients
+
 
 ## Productivity Tips
 
