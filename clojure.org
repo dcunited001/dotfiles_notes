@@ -35,17 +35,29 @@ sudo pamac install boot
 
 ** Project Setup
 
+* Clojars
+
 ** Contributing a Libarary to [[https://github.com/cljsjs/packages][cljsjs/packages]]
 
-create a new space in my fork of *cljsjs/packages* and symlink
+*** TODO create a new space in my fork of *cljsjs/packages* and symlink
+
++ [ ] update scripts to include basic error handling for args/etc
 
 #+begin_src shell :tangle (concat (file-name-as-directory (getenv "DEV_HOME_CLOJURE")) "scripts/cljsjs.sh")
 cljsjs-create-new-paths() {
-    mkdir -p $DEV_HOME_CLJSJS/$1/resources/cljsjs/$1/common
+    new_cljsjs_path=$DEV_HOME_CLJSJS/packages/$1/resources/cljsjs/$1/common
+    mkdir -p $new_cljsjs_path
+    
+    echo CREATED: $new_cljsjs_path
 }
 
 cljsjs-create-links() {
-    ln -s $DEV_HOME_CLJSJS/packages/$1 $DEV_HOME_CLOJURE/clojars/cljsjs/$1
+    new_cljsjs_path=$DEV_HOME_CLJSJS/packages/$1
+    new_cljsjs_link=$DEV_HOME_CLOJURE/clojars/cljsjs/$1
+    ln -s $new_cljsjs_path $new_cljsjs_link
+
+    echo LINKED: $new_cljsjs_link
+    echo TO: $new_cljsjs_path
 }
 #+end_src
 
@@ -77,3 +89,14 @@ i absolutely do not want to be on the hook for this shit just because i want to 
 + [ ] luma-gl
 + [ ] math-gl
 + [ ] deck-gl
+
+** My Clojars
+
+** My Cljsjs Packages
+
+*** [[https://github.com/uber-web/math.gl][math.gl]]
+*** TODO cljsjs clojar for [[https://github.com/visgl/luma.gl][luma.gl]]
+*** TODO cljsjs clojar for [[https://github.com/visgl/deck.gl][deck.gl]]
+*** TODO cljsjs clojar for loaders.gl
+*** TODO cljsjs clojar for vis.gl
+*** TODO cljsjs clojar for deck.gl-data
