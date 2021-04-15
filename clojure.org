@@ -1,4 +1,31 @@
+* Clojure Setup
+
+** Main Environment
+
+*** TODO port in relevant info from markdown doc
+
+
+*** Setup environment
+
+install language and tooling:
+
+#+begin_src shell :tangle no
+sudo pacman -Syu clojure clojure-lsp-bin leiningen
+sudo pamac install boot
+#+end_src
+
+
+
+
+* ClojureScript Setup
+
+** Main Environment
+
+*** Setup ~cljs~ and ~shadow-cljs~
+
+
 * Clojure
+
 
 
 
@@ -7,6 +34,20 @@
 ** Environment
 
 ** Project Setup
+
+** Contributing a Libarary to [[https://github.com/cljsjs/packages][cljsjs/packages]]
+
+create a new space in my fork of *cljsjs/packages* and symlink
+
+#+begin_src shell :tangle (concat (file-name-as-directory (getenv "DEV_HOME_CLOJURE")) "scripts/cljsjs.sh")
+cljsjs-create-new-paths() {
+    mkdir -p $DEV_HOME_CLJSJS/$1/resources/cljsjs/$1/common
+}
+
+cljsjs-create-links() {
+    ln -s $DEV_HOME_CLJSJS/packages/$1 $DEV_HOME_CLOJURE/clojars/cljsjs/$1
+}
+#+end_src
 
 *** TODO learn to put together a Clojar
 + [ ] use [[https://github.com/jmmk/javascript-externs-generator/][Javascript Externs Generator]] to prep a js lib for Google Closure
