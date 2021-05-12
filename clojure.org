@@ -1,5 +1,36 @@
 * Clojure Setup
 
+** Notes from Kate
+
+https://github.com/thheller/reagent-react-native
+https://github.com/thheller/reagent-expo
+https://github.com/thheller/fulcro-expo
+
+https://github.com/thheller/wasm-pack-cljs
+https://github.com/thheller/cljs-protobuf
+
+
+# 3 different ways to pack up CLJS deps with shadow
+https://github.com/thheller/cljs-jsmodules-test
+
+
+# code splitting (is there a better example?)
+https://github.com/thheller/code-splitting-clojurescript
+https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
+
+
+# maybe
+
+https://github.com/thheller/shadow-experiments
+
+https://github.com/noprompt/meander
+
+
+https://jacobian.org/2009/nov/10/what-to-write/
+
+
+
+
 ** Environment Setup
 
 *** TODO port in relevant info from markdown doc
@@ -206,6 +237,10 @@ git clone https://github.com/BetterThanTomorrow/calva $DEV_HOME_CLOJURE/tools/ca
 git clone https://github.com/clojure-emacs/orchard $DEV_HOME_CLOJURE/tools/orchard
 git clone https://github.com/seancorfield/dot-clojure $DEV_HOME_CLOJURE/tools/dot-clojure
 git clone https://github.com/practicalli/clojure-deps-edn $DEV_HOME_CLOJURE/tools/clojure-deps-edn
+git clone https://github.com/stathissideris/positano $DEV_HOME_CLOJURE/tools/positano
+git clone https://github.com/yosevu/shadow-static $DEV_HOME_CLOJURE/tools/shadow-static
+
+## Shadow CLJS
 git clone https://github.com/thheller/shadow-cljs $DEV_HOME_CLOJURE/tools/shadow-cljs
 
 ## Learning
@@ -213,12 +248,23 @@ git clone https://github.com/thheller/shadow-cljs $DEV_HOME_CLOJURE/tools/shadow
 git clone https://github.com/exercism $DEV_HOME_CLOJURE/learn/exercise-clojure
 git clone https://github.com/functional-koans/clojure-koans $DEV_HOME_CLOJURE/learn/clojure-koans
 
+## Docs
+
+git clone https://github.com/fulcrologic/fulcro-developer-guide $DEV_HOME_CLOJURE/tools/fulcro-developer-guide
+git clone https://github.com/shadow-cljs/shadow-cljs.github.io $DEV_HOME_CLOJURE/tools/shadow-cljs-developer-guide
+
 ## Luminus
 
 git clone https://github.com/luminus-framework/luminus-template $DEV_HOME_CLOJURE/web/luminus-template
 git clone https://github.com/luminus-framework/guestbook $DEV_HOME_CLOJURE/web/luminus-guestbook
 git clone https://github.com/luminus-framework/examples $DEV_HOME_CLOJURE/web/luminus-examples
 git clone https://github.com/magnars/confair $DEV_HOME_CLOJURE/web/confair
+
+## Native
+
+git clone https://github.com/lccambiaghi/sudoku-cljsrn $DEV_HOME_CLOJURE/native/sudoku-cljsrn
+git clone https://github.com/thheller/reagent-expo $DEV_HOME_CLOJURE/native/shadow-reagent-expo
+git clone https://github.com/thheller/fulcro-expo $DEV_HOME_CLOJURE/native/shadow-fulcro-expo
 
 ## Web Examples
 
@@ -231,7 +277,7 @@ git clone https://github.com/Day8/re-frame-trace $DEV_HOME_CLOJURE/web/examples/
 git clone https://github.com/jacekschae/shadow-reagent $DEV_HOME_CLOJURE/web/examples/shadow-reagent
 git clone https://github.com/jacekschae/shadow-firebase $DEV_HOME_CLOJURE/web/examples/shadow-firebase
 git clone https://github.com/ahonn/shadow-electorn-starter $DEV_HOME_CLOJURE/web/examples/shadow-electorn-starter
-git clone (https://github.com/jacekschae/conduit $DEV_HOME_CLOJURE/web/examples/conduit
+git clone https://github.com/jacekschae/conduit $DEV_HOME_CLOJURE/web/examples/conduit
 git clone https://github.com/quangv/shadow-re-frame-simple-example $DEV_HOME_CLOJURE/web/examples/shadow-re-frame-simple-example
 git clone https://github.com/teawaterwire/cryptotwittos $DEV_HOME_CLOJURE/web/examples/cryptotwittos
 git clone https://github.com/loganpowell/shadow-proto-starter $DEV_HOME_CLOJURE/web/examples/shadow-proto-starter
@@ -275,25 +321,9 @@ git clone https://github.com/fulcrologic/fulcro-native $DEV_HOME_CLOJURE/fulcro/
 git clone https://github.com/fulcrologic/aws-logs $DEV_HOME_CLOJURE/fulcro/aws-logs
 git clone https://github.com/fulcrologic/fulcro-garden-css $DEV_HOME_CLOJURE/fulcro/fulcro-garden-css
 git clone https://github.com/fulcrologic/fulcro-rad-tutorial $DEV_HOME_CLOJURE/fulcro/fulcro-rad-tutorial
-git clone https://github.com/fulcrologic/fulcro-developer-guide $DEV_HOME_CLOJURE/fulcro/fulcro-developer-guide
 
 ## Bioinformatics
 
 git clone https://github.com/mooreryan/clj-parse-fasta $DEV_HOME_CLOJURE/bio/clj-parse-fasta
 git clone https://github.com/mooreryan/derep $DEV_HOME_CLOJURE/bio/derep
 #+end_src 
-
-#+RESULTS:
-
-** old script to use on the markdown formatted list:
-
-#+begin_src shell :tangle no
-cat README.md | grep -e "- CLONE: " | sed "s/^- CLONE: //g" | xargs -n2 git clone`
-#+end_src
-
-
-** TODO discovery script for producting a list of files/commands to reinit git repos
-
-#+begin_src shell :tangle no
-echo "you complet me"
-#+end_src

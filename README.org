@@ -2,7 +2,7 @@
 
 Some of my notes on configurations. My most recent linux installs from 3/2021 are not included.
 
-*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VAg
+*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VA
 
 * Personal ~org-mode~ philosophy:
 
@@ -22,11 +22,9 @@ This should be a /mostly literate/ file declarative configuration of:
 ** Repo URL's which should be cloned into a tree of subdirectories
 *** like the github repos of interest i've listed in various ~README.md~ files
 
-
 ** The idea here is that I'm documenting what i'm doing so that it can be extended with minimal effort, regenerated if needed and easily found without looking
 
-
-* Language/Topic Locations
+* Language/Topic Metaprojects
 
 These should include:
 
@@ -49,3 +47,80 @@ These contain dotfiles/etc. For programming languages, symlinks can link back to
 *** TODO create initial symlinks for: julia, clojure, CAD
 *** TODO migrate /some/ existing notes to ~org~ using [[https://pandoc.org/installing.html][pandoc]]
 *** TODO address problem where whitelisting files in gitignore doesn't work
+
+
+** Mu Repo
+
+Tool and approach to clone/sync repos in a language sub/folder. For now, i've
+settled on [[https://fabioz.github.io/mu-repo/][mu-repo]] and i'll potentially revert to mixu/gr or autogit. I would
+like this to be scriptable and regeneratable (with minimal effort)
+
+To install =mu-repo=:
+
+#+begin_src shell :tangle no
+sudo pacman -Syu python-pip
+pip install mu-repo
+#+end_src
+
+Basic =mu-repo= usage:
+
+#+begin_src shell :tangle no
+mu register --recursive # recursively register all repos
+mu register --current # register with depth 1
+
+#+end_src
+
+To create for new metaprojects, do the following, more or less. For mu-repo to
+reclone all the projects, you must configure some path-dependent rules so that
+the correct =mu-repo.remote-base-url= config key is available. To retrieve this
+config key from within the containing metaproject root directory, you must init
+a blank repository anyways (otherwise, git will not retrieve commit keys). You
+could take [[https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/][this approach]] and have git deep-merge a partial
+~.gitconfig-metaproject~ config into your ~$HOME/.gitconfig~, which requires
+relevent configuration being placed in two places (i.e. lines changed in
+~$HOME/.gitconfig~ and the merged gitconfig in the metaproject). But, you must
+create a blank repo anyways for =mu-repo= to access its config keys... so it's
+best to alter the ~$METAPROJECT/.git/config~ ... which needs not be in git.
+Other features of mu-repo also benefit from an arbitrary blank-repo at the
+metaproject root. ~<le-sigh>~
+
+#+begin_src
+
+#+end_src
+
+#+begin_src shell :tangle no
+# USE RELATIVE PATHS
+
+
+META_PROJECT=/data/dev/nvidia
+META_GROUP1=src-nvidia
+META_GROUP2=src-khronos
+
+cd $META_PROJECT
+mkdir $META_GROUP1 $META_GROUP2
+git init
+
+#+end_src
+
+*** TODO describe setting up groups :murepo:
+
+
+
+*** TODO standardize a format for listing repos to clone for a language like clojure/julia/etc or use the following (preferred at top)
++ [[https://github.com/pazdera/gitwalk][pazdera/gitwalk]] (popular, allows groups defined via JSON, best so far)
++ [[https://github.com/mixu/gr][mixu/gr]] (another promising bulk management tool)
+  + similar to my old gitar scripts
+  + auto-discover local git repos, attach tags and manage as lists
++ [[https://github.com/asottile/all-repos][asottile/all-repos]] (interesting)
++ [[https://github.com/naddeoa/git-bulk][naddeoa/git-bulk]] (also probably helpful)
++ [[https://github.com/fabiospampinato/autogit][fabiospampinato/autogit]] (most popular, but aimed towards personal/org repo management)
++ [[https://github.com/scivision/pygit-bulk][scivision/pygit-bulk]] and [[https://pypi.org/project/gitutils/][GitMC]]
++ [[https://gist.github.com/Lukas238/8d9abbeabfcd7225e3a254d40eb0c080][Bulk backup/clone of Git Repos From A List]]
++ [[https://github.com/taylorjayoung/RepoSweeper][RepoSweeper]] (for deleting/managing Github repos)
+*** TODO emacs workflow: automation of structure for projects/org/code
++ outline basic structure for capture/refile
+  + manage org files, repo groups and/or metadata
+  + types of projects (reference groups, work, notes, etc)
++ automation for adding to gitwalk JSON groups (of repos for reference)
+  + when is it helpful to use these groups? when is it definitely overkill (i.e. much of the code i'm interested in should be easy to navigate to from a project... however, for now, i'm in unfamiliar territory with no clear way to expect which dependencies are going to exist in any project. i'm trying to avoid bad habits like googling code samples)
++ outline
