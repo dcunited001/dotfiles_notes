@@ -131,6 +131,49 @@ LOGDEST="{{ repo.home }}/makepkglogs"
 # BUILDENV=(!distcc color !ccache check sign)
 ```
 
+
+## Building emacs with `makepkg` 
+
+specifically, to get debugging of native codA
+
+- this requires having a copy of the source code, so the 
+*.c files can be accessed. this needs to be the same SHA
+what was built (ideally.... to match the *.map files, 
+if they are source maps?)
+
+#### pamac didn't work no matter what i tried.
+
+- pamac uses spawnv (not spawnve) to spawn makepkg AFAIK.
+  - so it doesn't pass env vars to `makepkg`
+- There are several invocations to makepkg 
+  - in alpm tools, database.vala and transaction.vala
+  - It builds packages with `makepkg -cCi`
+- strangely, there are no references to `pacman` in `pamac`...?
+  - is that correct?
+- anyways, even when changing `SRCDEST` in /etc/makepkg.conf,
+  - that shit didn't work for pamac
+  - it runs as a service with elevated priviledges and can't 
+    write to /usr/src
+  - pamac also fails when writing to /home/dc/local/src
+
+#### building with makepkg
+
+download [emacs-native-comp-git](https://aur.archlinux.org/emacs-native-comp-git.git) to
+/data/dev/abs/emacs-native-comp-git. 
+
+print .SRCINFO with `makepkg --printsrcinfo`. this is what 
+pamac digests (with pipes?) and it's likely that other 
+cmdline & gui tools do this as well.
+
+build with `makepkg -cCfLi`:
+
+- -L logs
+- -i installs the completed package
+- -f overwrites existing built package
+- -cC clean for fresh builds in case of failure
+
+#### getting makepkg to build optimized binaries
+
 ## OBS Repo
 
 #### To search for all `jack-git` dependencies and install (if on AUR)

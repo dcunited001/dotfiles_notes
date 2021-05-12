@@ -78,11 +78,27 @@ Setup ~cljs~ and ~shadow-cljs~
 
 #+begin_src shell :tangle no
 ### node/npm
-pacman -Syu nodejs npm
+# these are technically AUR packages via chaotic AUR ... build them
+pacman -Syu nodejs npm yarn nvm
 
 ### configure for npm
-npm config set prefix $HOME/.npm-packages
+# NVM now handles this and will not work with this configuration
+# npm config set prefix $HOME/.npm-packages
 
+### ensure shells load nvm code
+# echo 'source /usr/share/nvm/init-nvm.sh' >> .zshenv
+
+### set node version
+# for now, node-gyp blows up on a node-sass build with node v16
+#   - technically, node-sass is deprecated
+#   - but node-sass specifies builds with  CLANG_CXX_LANGUAGE_STANDARD=c++11 instead of c++14
+nvm install 15 # 15.14.0
+nvm use 15 # every single time i use clojurescript.....
+    
+### set default node version
+# to avoid needing to set this in every damn scripting context
+nvm alias default 15
+    
 ### shadow-cljs (file watch, tasks, builds, updates to repl/browser)
 npm install -g shadow-cljs
 
@@ -113,10 +129,52 @@ lein doo chrome-headless test once
 *** TODO other misc emacs packages/configs
 + org-shift-select
 
-** Project Setup
+** Reagent Template Project Setup
 
+use for a thick-client, singlepage frontend only app, with no reliance on a
+custom API.
 
-* Clojurescript
+** [[https://github.com/fulcrologic/fulcro-template#connect-to-the-cljs-nrepl][Fulcro Template]] Project Setup
+
+The Fulcro framework is more appropriate for projects with a clj API backend and
+a cljs-based reagent frontend. By default, Fulcro doesn't use Hiccup; including
+Hiccup breaks some of its server-side rendering capabilities =/
+
++ Notes on basic usage below.
++ Refer to the link above for more detailed usage.
++ Refer to the [[https://book.fulcrologic.com/#_about_this_book][Fulcro Developer Guide]] for the most detail
+
+#+begin_src shell :tangle no
+git clone --depth 1 -o fulcro-template https://github.com/fulcrologic/fulcro-template.git $DEV_HOME_CLOJURE/fulcro-app
+cd fulcro-app
+
+# The shadow-cljs compiler is a dependency.
+yarn install # or: npm install
+
+# 1. Start shadow-cljs frontend compilation server:
+npx shadow-cljs server
+# 2.: Visit the shadow-cljs compile server UI at http://localhost:9630
+#     and enable the "main" and optionally "workspaces" builds
+# 3. Start the backend server:
+#    (Note: for proper development you will want to start it in a nREPL-based
+#     REPL, see the detailed instructions for "The API Server" below.)
+clj -A:dev -J-Dtrace -J-Dghostwheel.enabled=true
+user=> (require 'development)
+user=> (in-ns 'development)
+development=> (start)
+# after modifications of the backend code run: `(restart)`
+# 4. Visit the application at http://localhost:3000
+
+# (Optional): Visit the Workspaces UI at http://localhost:3000/wslive.html
+# (Optional): Run tests via `npm run client/test` and visit http://localhost:8022
+#+end_src
+
+** React Native
+
+Luca C has [[https://luca.cambiaghi.me/posts/react-native-cljs.html][A Good Blog]] on react native with CLJS
+
++ The article covers writing a [[https://github.com/lccambiaghi/sudoku-cljsrn][Sudoku App]] for iphone (and how to configure the environment)
++ The blog itself is written with [[https://github.com/yosevu/shadow-static][Shadow Static]] a Shadow CLJS tool for static pages.
 
 * Clojars
 

@@ -56,8 +56,6 @@ sudo mount --rbind /mnt/docker /var/lib/
 
 then, make the mound permanent
 
-
-/dev/sdc7 /var/lib/docker btrfs rw,noatime,compress=zstd:3,ssd,space_cache,autodefrag,commit=120,subvolid=256,subvol=/@ 0 0
 ```
 /dev/sdx2 /var/lib/docker btrfs rw,noatime,compress=zstd:3,ssd,space_cache,autodefrag,commit=120,subvolid=256,subvol=/@ 0 0
 ```
@@ -71,7 +69,6 @@ then, make the mound permanent
 ### Minikube
 
 ## Helm
-
 
 ## Go (from source)
 
