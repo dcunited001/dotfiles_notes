@@ -30,7 +30,7 @@ various symptoms/conditions:
 
 ** Emergence of Chemical Structure in Evolution is not Arbitrary
 
-What is fascinating about neurotransmitters like Serotonin and Dopamine,
+What is fascinating about neurotransmitters, like Serotonin and Dopamine
 specifically, is that their value in natural organisms can be arrived at purely
 from first principles. Chiefly, they are among some of the fewest chemical structures which are guaranteed to be:
 
@@ -49,3 +49,9 @@ essential oils in detail would be illuminating.
 *** TODO port over content from my chemistry notebook on beta-glycans
 + specifically on how beta-glycans mirror objects from statitics (specifically
   in bayesian methods)
+
+* Galaxy Tools
+
+Have a look at [[https://github.com/bgruening/galaxytools][bgruening/galaxytools]] for pointers to tons of sciency tools. Most of the [[https://galaxyproject.org/][Galaxy Tools]] are hosted in Mercurial repositories in the [[https://toolshed.g2.bx.psu.edu/][galaxy tool shed]].
+
++ That I can grok most of the tool descriptions in a single pass is definitive proof of how much of a failure I am. Not sure why I can speedread academic literature, but that would probably prove useful, were society to not so singlemindedly try to shut me out of every single goddamn thing.
