@@ -1,0 +1,90 @@
+* Metarepo
+
+** [[https://github.com/canatella/repo-el/blob/master/repo.el][Repo]] (google tool, [[https://github.com/GerritCodeReview/git-repo][github mirror]])
+
++ Install =sudo pacman -Syu repo=
+
+*** Repo setup
+
++ =default.xml= [[https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md][manifest format]] documentation
+  - see info on local manifests (these inherit many properties)
++ [[https://gerrit.googlesource.com/git-repo/+/HEAD/docs/repo-hooks.md][repo hooks]] documentation
++ [[https://en.wikibooks.org/wiki/Git/Submodules_and_Superprojects][git superprojects]] documentation
+
+*** Emacs Integration: [[https://github.com/canatella/repo-el][repo-el]]
+
+*** System Setup
+
+Ideally, for all reference projects, i would like one =/data/dev/metarpo=
+project that contains all the metadata, while the actual contents of these are
+spread out into various =/data/dev= directories
+
+- that makes it easier to reason about to configure IDE's and tools
+
+**** TODO decide on local manifests
++ these /could/ be stored in local metarepos (but inherit too much?)
+**** TODO decide on root manifest
+
+*** Metarepos
++ Meta Repo =/data/dev/metarepo=
++ Meta =/data/dev/meta= (this could maybe simply reside in =/data/org=)
++ Emacs =/data/dev/emacs=
++ .Emacs =/data/dev/.emacs= (or .files)
++ Clojure =/data/dev/clojure=
++ Julia =/data/dev/julia=
++ KDE =/data/dev/kde=
++ Krita =/data/dev/krita=
++ Garuda =/data/dev/garuda=
++ ABS =/data/dev/abs=
++ Nvidia =/data/dev/nvidia=
+
+
+
+
+** [[https://github.com/mateodelnorte/meta][Meta]] (node cmd & makefile approach)
+
+*** Meta/Loop installation
+
+**** Meta Plugins
++ group
++ docker
++ git
++ template
+
+*** Emacs integration
+
+**** Basic
+
+**** Advanced
++ emacs package to provide ibuffer/dired/buffler-like interface to allow meta
+  repos/groups to be easily marked for meta/loop operations.
+
+**** Questions:
++ autodiscovery?
+  - flat directory structure only?
+  - tree structure permitted?
++ existing tooling? packages?
++ org integration? (primarily workflow)
+  - look at existing emacs-lisp packages that use org headers/lists as input for
+    other operations
++ Document the intended workflow
+
+**** Ideas
++ use org to document the global structure of metaproject containers?
+  - preferably so that these projects could be recreated easily
+
+*** System Setup
+
+Each metarepo must be a git repository
+
+*** TODO find out whether nested tree structures are allowed
+*** TODO find out how =meta= integrates with =loop=
+
+*** Metarepo Groups
+
+** Alternative Tools
+
+*** [[https://github.com/genius-systems/gameta][Gameta]] (python)
+*** [[https://github.com/blejdfist/git-metarepo][git-metarepo]]
+*** [[0    Link: https://gerrit.googlesource.com/git-repo/][repo]] (google)
+*** murepo
