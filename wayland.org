@@ -1,0 +1,195 @@
+#+TITLE: Wayland Notes
+#+AUTHOR: David Conner
+#+DESCRIPTION:
+#+PROPERTY: header-args :tangle ./config.el
+#+STARTUP: content
+#+OPTIONS: toc:nil
+
+* Wayland
+
+So I would like my Linux to be as close to full wayland as possible. I've only
+run into a few problems so far, but there are probably many parts of my system
+that need to be changed.
+
+For now, I'm running on KDE, but I plan on switching to XMonad + KDE soon. Why
+XMonad? KDE activities aren't well supported and are not likely to be in the
+near future. I've only scraped the surface of Wayland/KDE and I'm not sure how
+XMonad intersects with Wayland.
+
+** Pipewire
+
+Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
+the most problems so far.
+
+*** Removing Pipewire/Pulseaudio packages
+
+There are some problem packages on AUR which will sneakily riinstall
+=pulseaudio= packages if you're not watching. In some cases, this forces you to
+reinstall ALL =pipewire= dependent packages, which includes =kwin=, depending on
+how deeply fucked your system is. Pamac and AUR are usually pretty good at
+selecting the optional =pulseaudio=-providing packages, leaving your pipewire
+intact. However, I've just reinstalled pipewire on my system for the third time,
+twice on my MBP 2011 and now once on my MBP 2013.
+
+Problem packages:
++ [[https://aur.archlinux.org/packages/fedora-firefox-wayland-bin/][fedora-firefox-wayland-bin]],
+  - this has the optional dependency of pulseaudio, which should be provided by =pipewire-pulse=.
+  - however, my system's audio was just hosed by this and i had to manually reinstall pipewire & alsa.
++ there are others...
+
+The following removes most of the pipewire/pulse packages:
+
+#+begin_src shell :tangle no
+sudo pacman -Rns pulseeffects pipewire-pulse plasma-pa paprefs pavucontrol pavucontrol-qt
+sudo pacman -Rns pulseaudio-alsa pulseaudio-ctl pulseaudio-equalizer-ladspa
+sudo pacman -Rns pulseeffects pipewire-pulse plasma-pa paprefs pavucontrol pavucontrol-qt mkchromecast-git pipewire-support
+#+end_src
+
+Notes on reinstalling
+
++ avoid any install of pulseaudio like the plague
++ as long as pulseaudio is totally off your system,
+  - then once pipewire-support is installed
+  - the pulseaudio package is suppied by pipewire-pulse
+  - pipewire-pulse then conflicts with pulseaudio
++ This may require restarting the system at various points, esp. if one wants to
+  test whether the changes are permanent.
+
+*** Reinstalling Pipewire Packages
+
+**** Install the =pipewire-support= group
+
+#+begin_src shell :tangle no
+sudo pacman -Syu pipewire-support
+sudo pacman -Syu plasma-pa
+#+end_src
+
+*** Restarting Pipewire/Alsa Services
+
+**** Search for running pipewire/pulse services
+
+#+begin_src shell :tangle no
+systemctl --user list-units | grep pipewire
+systemctl --user list-units | grep audio
+systemctl --user list-units | grep pulse
+#+end_src
+
+**** Get status of =pipewire.service= and restart it
+
+#+begin_src shell :tangle no
+systemctl --user status pipewire.service
+systemctl --user reload-or-restart pipewire.service
+systemctl --user status pipewire.service
+#+end_src
+
+**** Look for pipewire services
+
+#+begin_src shell :tangle no
+systemctl --user list-units | grep pipe
+systemctl --user status pipewire-pulse.socket
+systemctl --user status pipewire-pulse.service
+systemctl --user reload-or-restart pipewire-pulse.service
+systemctl --user status pipewire-pulse.service
+#+end_src
+
+
+- I thought maybe the pipewire services were still down after boot, since the ALSA services fail to start during boot
+  - but none of the pipewire services seem to list ALSA services as dependencies
+  - this means pipewire is expecting to get information about audio hardware from another service/location, perhaps an intermediary service
+
+**** Examine the Pipewire service dependencies
+
+#+begin_src shell :tangle no
+systemctl --user list-dependencies pipewire-media-session.service
+#+end_src
+
+#+begin_quote
+pipewire-pulse.service
+● ├─pipewire-pulse.socket
+● ├─pipewire.service
+● ├─session.slice
+● └─basic.target
+●   ├─paths.target
+●   ├─sockets.target
+●   │ ├─dbus.socket
+●   │ ├─dirmngr.socket
+●   │ ├─gpg-agent-browser.socket
+●   │ ├─gpg-agent-extra.socket
+●   │ ├─gpg-agent-ssh.socket
+●   │ ├─gpg-agent.socket
+●   │ ├─p11-kit-server.socket
+●   │ └─pipewire.socket
+●   └─timers.target
+#+end_quote
+
+*** Troubleshooting ALSA:
+
+**** these services are running under root, but failing during boot with commands like
+
+#+begin_quote
+/usr/bin/alsactl: state_lock:125: file /var/lib/alsa/asound.state lock error: File exists
+/usr/bin/alsactl: load_state:1683: Cannot open /var/lib/alsa/asound.state for reading: File exists
+alsa-lib parser.c:260:(error_node) UCM is not supported for this HDA model (HDA Intel PCH at 0xa0900000 irq 50)
+alsa-lib main.c:1014:(snd_use_case_mgr_open) error: failed to import hw:0 use case configuration -6
+Found hardware: "HDA-Intel" "Cirrus Logic CS4206" "HDA:10134206,106b1c00,00100302 HDA:80862805,80860101,00100000" "0x8086" "0x7270"
+Hardware is initialized using a generic method
+#+end_quote
+
+**** You typically only have one of these running.
+
+Each is an alternative method of mediating access to ALSA hardware devices via
+Linux. The idea behind forcing the user to choose which to use and requiring
+user action to activate is that each method =alsa-state= and =alsa-restore= has
+pro's and con's -- /which I can't recall, your honor/. Neither is perfect and the
+user should be aware *at least once* of services interfacing with audio devices
+on their system.
+
+#+begin_src shell :tangle no
+
+sudo systemctl list-dependencies alsa-state.service
+sudo systemctl list-dependencies alsa-restore.service
+#+end_src
+
+
+
+useful link for my chip: Cirrus Logic CS4206/4207
+
++ https://www.kernel.org/doc/html/latest/sound/hd-audio/models.html
++ https://forum.garudalinux.org/t/soundcard-issues/3665/8
+
+
+troubleshooting modules/hardware access:
+
+
+modinfo hdaudio:v10134206r\*a01\*
+
+
+==========
+
+Also strange are other services in the `journalctl -xb` logs which are showing problems
+
+(pretty much just sudo, but what is home1.service?)
+May 03 05:39:43 mbp2011 sudo[278758]: pam_systemd_home(sudo:account): systemd-homed is not available: Unit dbus-org.freedesktop.home1.service not found.
+
+
+systemd-udevd[286]: controlC0: Process '/usr/bin/alsactl restore 0' failed with exit code 99.
+
+==========
+
+
+
+
+
+
+==========
+
+
+- found alsa-info.sh (part of alsa-utils package)
+- script asked to update to 0.5.0, replaced manually
+
+
+- alsa startup scripts mention UCM method being unavailable for my chip
+  - SOF is a newer method, so probably unavailable too
+- found link that mentions these. (archwiki on ALSA)
+  - https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_and_Systemd
+  - it mentions needing to choose between alsa-restore.service & alsa-state.service
