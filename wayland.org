@@ -1,7 +1,7 @@
 #+TITLE: Wayland Notes
 #+AUTHOR: David Conner
 #+DESCRIPTION:
-#+PROPERTY: header-args :tangle ./config.el
+#+PROPERTY:
 #+STARTUP: content
 #+OPTIONS: toc:nil
 
@@ -20,6 +20,11 @@ XMonad intersects with Wayland.
 
 Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
 the most problems so far.
+
+*TLDR* if you've got pipewire and your audio isn't coming up after reboot,
+chances are it's the packages/services/dependencies for ALSA and/or pipewire.
+Occassionally a package may clobber your AUR dependencies and reinstall
+PulseAudio.
 
 *** Removing Pipewire/Pulseaudio packages
 
@@ -124,7 +129,7 @@ pipewire-pulse.service
 
 *** Troubleshooting ALSA:
 
-**** these services are running under root, but failing during boot with commands like
+**** These services are running under root, but failing during boot with commands like
 
 #+begin_quote
 /usr/bin/alsactl: state_lock:125: file /var/lib/alsa/asound.state lock error: File exists
@@ -135,7 +140,10 @@ Found hardware: "HDA-Intel" "Cirrus Logic CS4206" "HDA:10134206,106b1c00,0010030
 Hardware is initialized using a generic method
 #+end_quote
 
-**** You typically only have one of these running.
+**** =alsa.state= or =alsa.restore= services: you typically only have one of these running.
+
+Following a reinstall of the packages/services for ALSA and Pipewire, a manual
+user action is required to get the Alsa services to restart.
 
 Each is an alternative method of mediating access to ALSA hardware devices via
 Linux. The idea behind forcing the user to choose which to use and requiring
@@ -145,51 +153,53 @@ user should be aware *at least once* of services interfacing with audio devices
 on their system.
 
 #+begin_src shell :tangle no
-
 sudo systemctl list-dependencies alsa-state.service
 sudo systemctl list-dependencies alsa-restore.service
 #+end_src
 
 
+**** useful links & tidbits for my chip: Cirrus Logic CS4206/4207
 
-useful link for my chip: Cirrus Logic CS4206/4207
++ [[https://www.kernel.org/doc/html/latest/sound/hd-audio/models.html][Lists of audio hardware for laptops.]]
+  - For me, I just needed to ctrl-f for =Cirrus= and/or =CS4206=
++ [[https://forum.garudalinux.org/t/soundcard-issues/3665/8][A useful Garuda Linux forum post on ALSA]]
++ [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_and_Systemd][The ArchWiki post on ALSA and associated services]]
+  - it mentions needing to choose between alsa-restore.service & alsa-state.service
++ alsa startup scripts mention UCM method being unavailable for my chip
+  - SOF is a newer method, so probably unavailable too.
+  - This was mostly a red herring for me. Goddammit Fred.
 
-+ https://www.kernel.org/doc/html/latest/sound/hd-audio/models.html
-+ https://forum.garudalinux.org/t/soundcard-issues/3665/8
+**** Troubleshooting modules/hardware access:
 
-
-troubleshooting modules/hardware access:
-
-
+#+begin_quote
 modinfo hdaudio:v10134206r\*a01\*
+#+end_quote
 
+**** Using =alsa-info.sh=
 
-==========
+Found =alsa-info.sh=, which is mainly what the =alsa-utils= package provides
 
-Also strange are other services in the `journalctl -xb` logs which are showing problems
+#+begin_src shell :tangle no
+sudo pacman -Syu alsa-utils
+
+# run this to follow the white rabbit
+pacman -Fl alsa-utils | grep bin
+#+end_src
+
+When you run the script, you will be asked to update to 0.6.0, which will be downloaded to a temporary file. You'll need to replace it manually. Run it again.
+
+#+begin_src shell :tangle no
+/usr/bin/alsa-info.sh
+#+end_src
+
+*** Misc
+
+**** Also strange are other services in the `journalctl -xb` logs which are showing problems
 
 (pretty much just sudo, but what is home1.service?)
+
+#+begin_quote
 May 03 05:39:43 mbp2011 sudo[278758]: pam_systemd_home(sudo:account): systemd-homed is not available: Unit dbus-org.freedesktop.home1.service not found.
 
-
 systemd-udevd[286]: controlC0: Process '/usr/bin/alsactl restore 0' failed with exit code 99.
-
-==========
-
-
-
-
-
-
-==========
-
-
-- found alsa-info.sh (part of alsa-utils package)
-- script asked to update to 0.5.0, replaced manually
-
-
-- alsa startup scripts mention UCM method being unavailable for my chip
-  - SOF is a newer method, so probably unavailable too
-- found link that mentions these. (archwiki on ALSA)
-  - https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_and_Systemd
-  - it mentions needing to choose between alsa-restore.service & alsa-state.service
+#+end_quote
