@@ -5,6 +5,7 @@ projects.org
 *.org_archive
 *
 !.gitignore
+!.gitmodules
 !./20201015_garuda-install-notes.md
 !./20201015_helm-kubernetes.md
 !./20201017_garuda-mbp2013.md
@@ -24,3 +25,5 @@ projects.org
 !./clojure.org
 !./metarepos.org
 !./wayland.org
+!meta
+!meta_eg

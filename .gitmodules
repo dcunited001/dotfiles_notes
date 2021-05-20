@@ -1,0 +1,3 @@
+[submodule "meta"]
+	path = meta
+	url = git@bitbucket.org:dcunited001/dotfiles_meta.git
