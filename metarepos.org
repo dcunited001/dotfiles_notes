@@ -38,9 +38,6 @@ spread out into various =/data/dev= directories
 + ABS =/data/dev/abs=
 + Nvidia =/data/dev/nvidia=
 
-
-
-
 ** [[https://github.com/mateodelnorte/meta][Meta]] (node cmd & makefile approach)
 
 *** Meta/Loop installation

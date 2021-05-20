@@ -1,16 +1,15 @@
-* TODO this ~org~ was converted from markdown & needs cleanup
+#+TITLE: KDE Notes
+#+AUTHOR: David Conner
+#+DESCRIPTION:
+#+PROPERTY:
+#+STARTUP: content
+#+OPTIONS: toc:nil
 
 * Ideas for KDE
-:PROPERTIES:
-:CUSTOM_ID: ideas-for-kde
-:END:
 
 - [[https://wiki.archlinux.org/index.php/KDE][KDE Archwiki]]
 
 *** Surveying the potential endpoints for automation
-    :PROPERTIES:
-    :CUSTOM_ID: surveying-the-potential-endpoints-for-automation
-    :END:
 
 - find references to key paths like =/etc/*=, =/var/*= and similar by
   searching files like =/var/log/pacman.log=
@@ -26,53 +25,31 @@
     [[http://openiconlibrary.sourceforge.net/][open icon library]]
 
 *** Session/Window Management
-    :PROPERTIES:
-    :CUSTOM_ID: sessionwindow-management
-    :END:
+
 
 **** [[https://community.kde.org/KWin/Wayland#Start_a_Plasma_session_on_Wayland][KWin/Wayland]]
-     :PROPERTIES:
-     :CUSTOM_ID: kwinwayland
-     :END:
++ [[https://shibumi.dev/posts/wayland-in-2021/][status of Wayland in 2021]]
++ [[https://www.proli.net/2020/04/03/developing-kwin-wayland/][Developing KWin Wayland]]
++ [[https://community.kde.org/Sprints/Wayland/2021Virtual][Wayland 2021 sprint]]
 
-- [[https://shibumi.dev/posts/wayland-in-2021/][status of Wayland in 2021]]
-- [[https://www.proli.net/2020/04/03/developing-kwin-wayland/][Developing KWin Wayland]]
-- [[https://community.kde.org/Sprints/Wayland/2021Virtual][Wayland 2021 sprint]]
+**** [[https://wiki.archlinux.org/index.php/XDG_Autostart][XDG Autostart]] can be used
++ to load =.desktop= definitions (which are apparently brittle). the archwiki
+  mentions
++ application launch scripts can be gradually built up from =.desktop= scripts
+  and other available config entities (hashes merged on top of these can
+  function as launch profiles specific to a =virtual-desktop= or a Plasma
+  =activity=
 
-**** [[https://wiki.archlinux.org/index.php/XDG_Autostart][XDG
-Autostart]] can be used
-     :PROPERTIES:
-     :CUSTOM_ID: xdg-autostart-can-be-used
-     :END:
+*** Wayland's =xdg-session-management= gradually replaces =XSMP=
 
-to load =.desktop= definitions (which are apparently brittle). the
-archwiki mentions
-
-- application launch scripts can be gradually built up from =.desktop=
-  scripts and other available config entities (hashes merged on top of
-  these can function as launch profiles specific to a =virtual-desktop=
-  or a Plasma =activity=
-
-*** [Wayland's =xdg-session-management= gradually replaces =XSMP=]
-    :PROPERTIES:
-    :CUSTOM_ID: waylands-xdg-session-management-gradually-replaces-xsmp
-    :END:
-
-- [[https://www.datamation.com/open-source/the-mystery-of-kde-activities/][The Mysteryof KDE Activities]], a 2012 blog referencing the below 2011
-  blog before interest was lost in activities.........
-
-**** [[https://chani.wordpress.com/2011/08/01/beyond-activities-cross-device-sessions/#more-706][Beyond Activities: Cross-Device Sessions]]:
-     :PROPERTIES:
-     :CUSTOM_ID: beyond-activities-cross-device-sessions
-     :END:
-
-2011 Blog: XSMP, KDE Activities, Cross-Device Sessions and the gradual
-move to [what became] Wayland's XDG Session Manager
+****  [[https://www.datamation.com/open-source/the-mystery-of-kde-activities/][The Mysteryof KDE Activities]]
++ a 2012 blog referencing the below 2011 blog before interest was lost in
+  activities.........
+**** [[https://chani.wordpress.com/2011/08/01/beyond-activities-cross-device-sessions/#more-706][Beyond Activities: Cross-Device Sessions]]
++ 2011 Blog: XSMP, KDE Activities, Cross-Device Sessions and the gradual move to
+  [what became] Wayland's XDG Session Manager
 
 *** Idempotent approach to KDE activity state (via xmonad-like hooks)
-    :PROPERTIES:
-    :CUSTOM_ID: idempotent-approach-to-kde-activity-state-via-xmonad-like-hooks
-    :END:
 
 an implementation of the idea would be like an advanced =xmonad= config
 where:
@@ -85,8 +62,4 @@ where:
   a,b,c selenium-style UI interactions to arrive at the targeted
   topicspace state requirements)
 
-**** requires capabilities of
-[[https://wiki.haskell.org/Xmonad/Mutable_state_in_contrib_modules_or_xmonad.hs][XMonad with Mutable State]]
-     :PROPERTIES:
-     :CUSTOM_ID: requires-capabilities-of-xmonad-with-mutable-state
-     :END:
+**** requires capabilities of [[https://wiki.haskell.org/Xmonad/Mutable_state_in_contrib_modules_or_xmonad.hs][XMonad with Mutable State]]

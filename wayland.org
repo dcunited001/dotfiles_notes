@@ -5,7 +5,17 @@
 #+STARTUP: content
 #+OPTIONS: toc:nil
 
-* Wayland
+* Table of Contents :TOC_3_gh:
+- [[#wayland][Wayland]]
+  - [[#wayland-overview-02][Wayland Overview]]
+  - [[#pipewire][Pipewire]]
+    - [[#removing-pipewirepulseaudio-packages][Removing Pipewire/Pulseaudio packages]]
+    - [[#reinstalling-pipewire-packages][Reinstalling Pipewire Packages]]
+    - [[#restarting-pipewirealsa-services][Restarting Pipewire/Alsa Services]]
+    - [[#troubleshooting-alsa][Troubleshooting ALSA]]
+    - [[#misc][Misc]]
+
+* Wayland :wayland:
 
 So I would like my Linux to be as close to full wayland as possible. I've only
 run into a few problems so far, but there are probably many parts of my system
@@ -15,6 +25,12 @@ For now, I'm running on KDE, but I plan on switching to XMonad + KDE soon. Why
 XMonad? KDE activities aren't well supported and are not likely to be in the
 near future. I've only scraped the surface of Wayland/KDE and I'm not sure how
 XMonad intersects with Wayland.
+
+
+** TODO Wayland Overview [0/2] :wayland:
++ [ ] assess how close my system really is to 100% wayland
++ [ ]
+
 
 ** Pipewire
 
@@ -127,7 +143,7 @@ pipewire-pulse.service
 ●   └─timers.target
 #+end_quote
 
-*** Troubleshooting ALSA:
+*** Troubleshooting ALSA
 
 **** These services are running under root, but failing during boot with commands like
 
