@@ -1,0 +1,206 @@
+
+* Arch
+
++ [[https://k1sslinux.org/][KISS Linux]] (also check this out)
+
+** Pacman
+
+*** =/etc/pacman-mirrors.conf=
+
++ set to 
+  - doesn't seem to force HTTPS by default
+
+** Pamac
+
+*** just don't use it 
+
+- why have i not thought about explored GUI alternatives?!!
+- the GUI keeps changing ... and losing features
+  - i can't select text without clicking apply
+- the CLI ... isn't "turing complete"
+  - j/k ... but there are a ton of operations which have no solution in CLI
+    - like discovering what to un/install or re/build
+    - which is analogous to a language which lacks support for grammar/etc and thus cannot express certain programs
+  - it's bc there's no way to stage large lists of transactions that all must succeed or fail
+    - i.e. re/installing or re/building alternative packages for ALSA/pipewire WHICH KEEPS FUCKING BREAKING 
+
+** Pamac alternatives
+
+only yup, octopi, cylon and pkgbrowser have been updated in 2020
+
+*** Octopi
+
+the most recently updated ... 
+
+- and now i remember using it ... 
+  - but my system crashed and wompwomp i didn't condition it's usage for long enough to remember
+- social isolation in technology is killing me
+
+
+Octopi makes it hard to use AUR, afaik
+
+- requires clicking enable AUR, then restarting
+  - but you'll need to create a folder for builds =/var/tmp/octopi-build-dc
+  - nevermind, you'll need to install an AUR helper
+    - =yay= and =pikaur= are the most active.
+    - =yay= is the default. yay it is ..... yayyy pipewire
+
+*** Yup
+
+- doesn't work for me. never starts. 
+- requires using KRun bc the start menu in KDE doesn't know about it
+
+*** Cylon
+
+TODO: try it
+
+*** PkgBrowser
+
+- read-only (but useful? fingers crossed)
+- this is nice
+
+** Reflector
+
+*** Setup
+
+1) configure =/etc/xdg/reflector/reflector.conf=
+  - see [[https://archlinux.org/mirrors/status/][arch mirror status]] for details
+  - score :: ~(avg(mirror.delay) + avg(sync.duration) + std_dev(sync.duration)) / mirror.completion.pct~
+2) enable reflector.service 
+  - after enabling, start it to test
+  - if =--verbose= flag is set, mirror testing process will be available via ~journalctl~
+3) update timer (4 days)
+
+#+BEGIN_SRC shell :tangle no
+--save /etc/pacman.d/mirrorlist
+--verbose 
+--fastest 25
+--protocol https 
+--country nl,ca,uk,us,de,fr,es,kr,jp
+--ipv6
+--sort score 
+#--sort age
+#--threads 3 # not sure if i can thread this
+#+END_SRC
+
+configure =reflector.service=
+
+#+BEGIN_SRC shell :tangle no
+#!/bin/bash
+# this will refresh all mirrors on boot ............ . . . 
+# systemctl enable reflector.service
+
+# start it to test the configuration
+systemctl start reflector.service
+
+# make sure it's disabled, so it doesn't affect boot
+systemctl disable reflector.service
+#+END_SRC
+
+after successful refresh/selection of mirrors, enable the timer:
+
+#+BEGIN_SRC shell :tangle no
+#!/bin/bash
+systemctl enable reflector.timer
+systemctl start reflector.timer
+#+END_SRC
+
++ The defaults are fine, but to edit: ~systemctl edit reflector.timer~
+  - Persistent means it will run if the calendar time is missed
+  - RandomizedDelaySec means it won't run after a calendar time unless =12h= has passed
+
+#+BEGIN_SRC toml :tangle no
+### /usr/lib/systemd/system/reflector.timer
+# [Unit]
+# Description=Refresh Pacman mirrorlist weekly with Reflector.
+#
+# [Timer]
+# OnCalendar=weekly
+# Persistent=true
+# AccuracySec=1us
+# RandomizedDelaySec=12h
+#
+# [Install]
+# WantedBy=timers.target
+#+END_SRC
+
++ get mirrors from countries: nl,ca,uk,us,de,fr,es,kr,jp
+  - HTTPS & IPv6 only
+    - IPv6 is IPSec [[https://www.redhat.com/sysadmin/ipv6-packets-and-ipsec][by default]] 
+    - ... kinda (see [[https://www.rfc-editor.org/info/rfc6434][RFC 6434]] apparently  
+  - of the fastest, select 25
+  - then sort by score (randomness)
+
+setup services:
+
+
+  
+
+*** TODO configure [[https://wiki.archlinux.org/title/Reflector][reflector.service]] [/]
+
++ [ ] enable reflector.service
++ [ ] edit reflector.timer 
++ [ ] add a degree of randomization (shuffle the top mirrors)
+
++ pacman-contrib =/usr/bin/rankmirrors= can also reorder mirrors
++ is there a means of collecting stats on which mirrors were selected to determine bias?
+  - yes: analyze the pacman logs
+
+*** TODO find out what purpose =/etc/pacman-mirrors.conf= has
+
+** System D
+
+- =reflector.service= uses a [[https://wiki.archlinux.org/title/Systemd/Timers][systemd timer]]
+
+*** GUI management tools
+
+- why are tools like these not bundled in by default to distro installs?
+  - why is social isolation fucking ruining my life? 
+  - there are so many technology terms/acronyms/options that i have never *heard* spoken
+    - let alone seen someone use .... EVER
+
+- systemd-ui/systemdgenie are both available from aur
+
+**** systemdgenie
+
++ this is qt/kde
++ OH BUT WAIT: THERE'S AN APP FOR THAT TOOOO
+  - goddammit this social isolation is killing me
+
+**** systemd-ui
+
+TODO: try it?
+
+
+*** Emacs
+
+Emacs can be run as a systemd unit (in server mode)
+
+
+
+
+*** Timers
+
++ Check the least frequent BTRFS timer =btrfs-scrub@-.timer=
+  - it has malformed unit id (& etc). 
+  - there is a problem with BTRFS being unable to delete prior updates
+  - backups may not be purged or created properly
+  - also, the system may not be able to reconcile the pre-March 2021 BTRFS backups
+
+
+** Automation
+
+*** TODO figure out the best way to integrate run automated admin tasks 
+
++ status checks (present notifications via KDE)
+  - check last pacman/pamac updates (esp. pamac =--aur= and =--devel=
+    - need to ensure passwordsafe and other packages are up to date
++ and automated tasks
+  - like checking for updates to git repo's 
+    - either all of them enumerated under a =manifest.xml=
+    - or just some of them (listed under a group)
+
+
+
+
+
