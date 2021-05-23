@@ -31,7 +31,6 @@ XMonad intersects with Wayland.
 + [ ] assess how close my system really is to 100% wayland
 + [ ]
 
-
 ** Pipewire
 
 Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
@@ -61,9 +60,19 @@ Problem packages:
 The following removes most of the pipewire/pulse packages:
 
 #+begin_src shell :tangle no
-sudo pacman -Rns pulseeffects pipewire-pulse plasma-pa paprefs pavucontrol pavucontrol-qt
-sudo pacman -Rns pulseaudio-alsa pulseaudio-ctl pulseaudio-equalizer-ladspa
-sudo pacman -Rns pulseeffects pipewire-pulse plasma-pa paprefs pavucontrol pavucontrol-qt mkchromecast-git pipewire-support
+sudo pacman -Rns \
+    pulseeffects \
+    pipewire-pulse \
+    plasma-pa paprefs \
+    pavucontrol \
+    pavucontrol-qt
+sudo pacman -Rns \
+    pulseaudio-alsa \
+    pulseaudio-ctl \
+    pulseaudio-equalizer-ladspa
+sudo pacman -Rns \
+    mkchromecast-git \
+    pipewire-support
 #+end_src
 
 Notes on reinstalling

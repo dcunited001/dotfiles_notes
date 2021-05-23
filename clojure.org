@@ -1,3 +1,6 @@
+
+
+
 * Clojure Setup
 
 ** Notes from Kate
@@ -11,10 +14,7 @@ https://github.com/thheller/cljs-protobuf
 
 
 # 3 different ways to pack up CLJS deps with shadow
-https://github.com/thheller/cljs-jsmodules-test
-
-
-# code splitting (is there a better example?)
+https://github.com/thheller/cljs-jsmodules-test# code splitting (is there a better example?)
 https://github.com/thheller/code-splitting-clojurescript
 https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html
 
@@ -30,7 +30,6 @@ https://jacobian.org/2009/nov/10/what-to-write/
 
 
 
-
 ** Environment Setup
 
 *** TODO port in relevant info from markdown doc
@@ -42,6 +41,9 @@ https://jacobian.org/2009/nov/10/what-to-write/
 + Clojure CLI
 
 *** Setup environment
+:PROPERTIES:
+:ID:       0f65a19f-731c-4e34-90f7-5d06d361afd4
+:END:
 
 install language and tooling:
 
@@ -228,7 +230,6 @@ cljsjs-create-minimal-files() {
 + [ ] create the externs definition
 + [ ] add ~build.boot~
 + [ ] add ~README.md~
-  
 
 *** TODO learn to push a clojar
 + [ ] Assert that the clojar libary is ready for external use
@@ -257,7 +258,25 @@ i absolutely do not want to be on the hook for this shit just because i want to 
 *** TODO cljsjs clojar for vis.gl
 *** TODO cljsjs clojar for deck.gl-data
 
+
 * Reference projects
+
+** old script to use on the markdown formatted list:
+
+#+begin_src shell :tangle no
+cat README.md | grep -e "- CLONE: " | sed "s/^- CLONE: //g" | xargs -n2 git clone`
+#+end_src
+
+
+** TODO discovery script for producting a list of files/commands to reinit git repos
+
+#+begin_src shell :tangle no
+echo "you complet me"
+#+end_src
+
+** Clone Reference Projects
+
+Does Github have some concept of "repo playlists" or lists of repo's I can easily clone at once
 
 #+begin_src shell :tangle (concat (file-name-as-directory (getenv "DEV_HOME_CLOJURE")) "scripts/clones.sh")
 
@@ -385,3 +404,11 @@ git clone https://github.com/fulcrologic/fulcro-rad-tutorial $DEV_HOME_CLOJURE/f
 git clone https://github.com/mooreryan/clj-parse-fasta $DEV_HOME_CLOJURE/bio/clj-parse-fasta
 git clone https://github.com/mooreryan/derep $DEV_HOME_CLOJURE/bio/derep
 #+end_src 
+
+
+
+### CLJFS
+
+GUI in clojure using a scene graph
+
+git clone https://github.com/cljfx/cljfx

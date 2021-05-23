@@ -1,10 +1,12 @@
 * Project Ideas
 
-** Colorimetry
+** Graphics
 
-*** Get ideas from Jan Koenderink's [[https://www.amazon.com/Color-Sciences-MIT-Press-Koenderink/dp/0262014289][Color for the Sciences]]
+*** Colorimetry
 
-*** Abuse WebAudio for color space computations
+**** Get ideas from Jan Koenderink's [[https://www.amazon.com/Color-Sciences-MIT-Press-Koenderink/dp/0262014289][Color for the Sciences]]
+
+**** Abuse WebAudio for color space computations
 
 see [[https://media-codings.com/articles/what-else-can-we-do-with-the-web-audio-api][this article]] for a simple way to chain many computations together. it
 requires overhead in marshalling data into/out of a WebAudio thread (which runs
@@ -13,3 +15,10 @@ separatedly)
 also, there are examples of using [[https://webaudio.github.io/web-audio-api/#AudioWorklet-Examples][WebAudio AudioWorklet]] to accomplish the same
 thing, but functions are restricted within the computations (they must translate
 to DSP computations AFAIK)
+
+** Emacs
+
+*** pacman/AUR interface
+
+this would be nice
+

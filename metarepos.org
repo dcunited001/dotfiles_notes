@@ -1,4 +1,15 @@
+#+TITLE: Wayland Notes
+#+AUTHOR: David Conner
+#+DESCRIPTION:
+#+PROPERTY:
+#+STARTUP: content
+#+OPTIONS: toc:nil
+
+
 * Metarepo
+
+
+
 
 ** [[https://github.com/canatella/repo-el/blob/master/repo.el][Repo]] (google tool, [[https://github.com/GerritCodeReview/git-repo][github mirror]])
 
@@ -10,6 +21,10 @@
   - see info on local manifests (these inherit many properties)
 + [[https://gerrit.googlesource.com/git-repo/+/HEAD/docs/repo-hooks.md][repo hooks]] documentation
 + [[https://en.wikibooks.org/wiki/Git/Submodules_and_Superprojects][git superprojects]] documentation
++ Android docs
+  - [[https://source.android.com/setup/develop/repo][Repo Command Reference]]
+  - [[https://source.android.com/setup/develop/repo][Source Control Tools]]
+  - [[https://source.android.com/setup/create/coding-tasks][Source Control Workflow]]
 
 *** Emacs Integration: [[https://github.com/canatella/repo-el][repo-el]]
 
@@ -29,7 +44,7 @@ spread out into various =/data/dev= directories
 + Meta Repo =/data/dev/metarepo=
 + Meta =/data/dev/meta= (this could maybe simply reside in =/data/org=)
 + Emacs =/data/dev/emacs=
-+ .Emacs =/data/dev/.emacs= (or .files)
++ .Emacs =/data/dev/x.files= (or .files)
 + Clojure =/data/dev/clojure=
 + Julia =/data/dev/julia=
 + KDE =/data/dev/kde=

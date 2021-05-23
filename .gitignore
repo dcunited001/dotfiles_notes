@@ -25,5 +25,6 @@ projects.org
 !./clojure.org
 !./metarepos.org
 !./wayland.org
+!./arch.org
 !meta
 !meta_eg
