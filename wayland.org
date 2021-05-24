@@ -9,10 +9,8 @@
 - [[#wayland][Wayland]]
   - [[#wayland-overview-02][Wayland Overview]]
   - [[#pipewire][Pipewire]]
-    - [[#removing-pipewirepulseaudio-packages][Removing Pipewire/Pulseaudio packages]]
-    - [[#reinstalling-pipewire-packages][Reinstalling Pipewire Packages]]
-    - [[#restarting-pipewirealsa-services][Restarting Pipewire/Alsa Services]]
-    - [[#troubleshooting-alsa][Troubleshooting ALSA]]
+    - [[#journey-the-4th][Journey the 4th]]
+    - [[#journey-the-5th][Journey the 5th]]
     - [[#misc][Misc]]
 
 * Wayland :wayland:
@@ -34,14 +32,17 @@ XMonad intersects with Wayland.
 ** Pipewire
 
 Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
-the most problems so far.
+the most problems so far. This has happened on either laptop about 5 times since
+October 2020.
+
+*** Journey the 4th
 
 *TLDR* if you've got pipewire and your audio isn't coming up after reboot,
 chances are it's the packages/services/dependencies for ALSA and/or pipewire.
 Occassionally a package may clobber your AUR dependencies and reinstall
 PulseAudio.
 
-*** Removing Pipewire/Pulseaudio packages
+**** Removing Pipewire/Pulseaudio packages
 
 There are some problem packages on AUR which will sneakily riinstall
 =pulseaudio= packages if you're not watching. In some cases, this forces you to
@@ -85,16 +86,16 @@ Notes on reinstalling
 + This may require restarting the system at various points, esp. if one wants to
   test whether the changes are permanent.
 
-*** Reinstalling Pipewire Packages
+**** Reinstalling Pipewire Packages
 
-**** Install the =pipewire-support= group
+***** Install the =pipewire-support= group
 
 #+begin_src shell :tangle no
 sudo pacman -Syu pipewire-support
 sudo pacman -Syu plasma-pa
 #+end_src
 
-*** Restarting Pipewire/Alsa Services
+**** Restarting Pipewire/Alsa Services
 
 **** Search for running pipewire/pulse services
 
@@ -127,7 +128,7 @@ systemctl --user status pipewire-pulse.service
   - but none of the pipewire services seem to list ALSA services as dependencies
   - this means pipewire is expecting to get information about audio hardware from another service/location, perhaps an intermediary service
 
-**** Examine the Pipewire service dependencies
+***** Examine the Pipewire service dependencies
 
 #+begin_src shell :tangle no
 systemctl --user list-dependencies pipewire-media-session.service
@@ -152,9 +153,10 @@ pipewire-pulse.service
 ●   └─timers.target
 #+end_quote
 
-*** Troubleshooting ALSA
 
-**** These services are running under root, but failing during boot with commands like
+**** Troubleshooting ALSA
+
+***** These services are running under root, but failing during boot with commands like
 
 #+begin_quote
 /usr/bin/alsactl: state_lock:125: file /var/lib/alsa/asound.state lock error: File exists
@@ -165,7 +167,7 @@ Found hardware: "HDA-Intel" "Cirrus Logic CS4206" "HDA:10134206,106b1c00,0010030
 Hardware is initialized using a generic method
 #+end_quote
 
-**** =alsa.state= or =alsa.restore= services: you typically only have one of these running.
+***** =alsa.state= or =alsa.restore= services: you typically only have one of these running.
 
 Following a reinstall of the packages/services for ALSA and Pipewire, a manual
 user action is required to get the Alsa services to restart.
@@ -183,7 +185,7 @@ sudo systemctl list-dependencies alsa-restore.service
 #+end_src
 
 
-**** useful links & tidbits for my chip: Cirrus Logic CS4206/4207
+***** useful links & tidbits for my chip: Cirrus Logic CS4206/4207
 
 + [[https://www.kernel.org/doc/html/latest/sound/hd-audio/models.html][Lists of audio hardware for laptops.]]
   - For me, I just needed to ctrl-f for =Cirrus= and/or =CS4206=
@@ -194,13 +196,13 @@ sudo systemctl list-dependencies alsa-restore.service
   - SOF is a newer method, so probably unavailable too.
   - This was mostly a red herring for me. Goddammit Fred.
 
-**** Troubleshooting modules/hardware access:
+***** Troubleshooting modules/hardware access:
 
 #+begin_quote
 modinfo hdaudio:v10134206r\*a01\*
 #+end_quote
 
-**** Using =alsa-info.sh=
+***** Using =alsa-info.sh=
 
 Found =alsa-info.sh=, which is mainly what the =alsa-utils= package provides
 
@@ -217,9 +219,115 @@ When you run the script, you will be asked to update to 0.6.0, which will be dow
 /usr/bin/alsa-info.sh
 #+end_src
 
+
+
+*** Journey the 5th
+
+It must be kernel updates or systemd reconfigurations. It's affecting both my
+laptops now, two days after i exorcised the alsa daemons ... so.
+
+**** Planned package changes:
+
++ remove ALSA, replace with the bleeding edge develop packages
+  - or use the nosystemd packages
++ =pipewire-full-git= provides:
+  - pipewire
+  - pipewire-media-session
+  - alsa-card-profiles
+  - =libpipewire-0.3.so=0-64=
++ The table below might not be 100% accurate... I'm not sure
+  - Guix is always sure though.
+  - (R)emove, (I)nstall, (B)uild, (D)evel
+
+|-------------------------------+---------------+---+---+---+---|
+| context                       | pkg           | R | I | B | D |
+|-------------------------------+---------------+---+---+---+---|
+| *ALSA*                        | support       | r | . | . | d |
+| alsa-.*(:?-git)               | utils         | r | . | . | d |
+|                               | lib           | r | . | . | d |
+|                               | card profiles | r | . | . | . |
+|                               | capabilities  | . | i | . | . |
+|                               | control       | . | i | . | . |
+|                               | firmware      | . | i | . | . |
+|-------------------------------+---------------+---+---+---+---|
+| *Pipewire*                    | support       | r | . | . | d |
+| pipewire(:?-full)-.*-(:?git)) | alsa          | r | . | . | d |
+|                               | pulse         | r | . | . | d |
+|                               | jack          | r | . | . | d |
+|                               | docs          | . | . | . | d |
+|                               | media-session | r | . | . | d |
+| (.*)-pipewire-full-git        | gst-plugin    | r | . | . | d |
+|-------------------------------+---------------+---+---+---+---|
+| PulseEffects                  | pulseeffects  | r | . | . | d |
+| (.*)-pulseeffects-git         | gst-plugin    | . | . | . | d |
+|-------------------------------+---------------+---+---+---+---|
+| Misc                          | jack2         | . | . | . | . |
+|                               | wireplumber   | r | . | . | d |
+|                               | plasma-pa     | r | . | . | d |
+|-------------------------------+---------------+---+---+---+---|
+
+
+**** Installed some better GUI tools like =octopi= !!
+
++ =systemdgenie=
++ =yay=
++ =pkgbrowser=
+
+**** Cut the red wire or the green wire?
+
+Determining which ALSA service to enable is a bit tricky. It seems like =alsa-restore= gives you more granular control whereas =alsa-state= is a bit more automatic/dynamics ..... *but that's probably wrong*
+
+**** Remove =alsa-support= and =pipewire-support=
+
++ These are the garuda groups via chaotic AUR. They are convenient, but they
+  make it harder to load/unload their bundled packages
+  - and =pamac= wants to uninstall the whole damn system
+    - both browsers, all audio everything and why not multimedia too!
+    - oh, don't forget to rebuild KWin/plasma. in one turn; do not pass go.
+      - this roulette table is hot and daddy's getting a new pair of shoes
+
+**** Use =octopi= and =yay= to reinstall =pipewire-all-the-things=, but yay is smart
++ be the yay you've always wanted to exclaim
++ yay reconciles a lot of things, but ... POP QUIZ:
+  - =#monty-python-bridge-guy= asks you 20 questions and if you get one wrong, you die. Overall it's for the best.
+
+**** Install =pipewire-full-git= and =alsa--git= from devel
+
++ when new kernels break your shit, hit the gas.
+  - that's my logic here, it's risky yes, but not as risky as the roulette stakes for rebuilding KWin/Plasma
++ "new minor version kernels require even newer bugfixes..."
+  - which is not entirely tragic n00b logic ... if you manage to stick around
+    you might just learn some things along the way Sysyphus
+  - IMHO faster updates and shorter feedback loops is a huge plus for Arch
++ cross fingers.... no serious build errors (skipped some packages)
+
+**** Tidy up the packages, check systmed. Restart Arch & Emacs 5 Times.
+
++ check it again... and again. wtf?
+  - try both =alsa-restore= and =alsa-state= interchangeably because hey "round hole, square peg?"
++ nothing works. randomly start =alsacontrol= GUI to find that ... yes, that
+  shit can talk to my mic (but not my output/speakers)
++ and I finally see Systemd units for ALSA have changed ... which is not the only thing broken.
+  - I could not for the life of my see this one critical "condition failed" for =sudo systemctl status alsa.state= ... which probably means that it's actually new and i've bumbled into fixing something else wrong with audio that I don't understand, but...
+
+#+begin_quote
+  Condition: start condition failed at Sun 2021-05-23 21:38:22 EDT; 8s ago
+             └─ ConditionPathExists=/etc/alsa/state-daemon.conf was not met
+#+end_quote
+
++ Jenkies :: a clue
+  - =/etc/alsa/state-daemon.conf= is nowhere to be found, which probably means the SystemD config shifted between released alsa packages and =AUR devel= packages.
+
+
 *** Misc
 
-**** Also strange are other services in the `journalctl -xb` logs which are showing problems
+**** Also strange: abberantly named systemd units:
+- control characters
+- duplicate service units
+  - some with logs & some with none
+  - normal? i donno
+
+**** Other services in the `journalctl -xb` logs showing problems
 
 (pretty much just sudo, but what is home1.service?)
 

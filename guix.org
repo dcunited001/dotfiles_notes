@@ -1,0 +1,57 @@
+* Guix
+
+** Guix System
+
+*** Potential Problems with an Early Switch
+
++ Managing multiple systems
+  - =/home/dc= may not seemlessly port between both systems
+    + potential state problems here
+  - both Gnome/KDE in the same HOME/XDG config directories?
++ Friction
+  - Being without dotfiles/dev/tools
++ Known timesinks
+  - Scheme/Guile & tooling thereof
+  - cataloguing time sinks
++ Fuzzy timesinks
+  - XMonad?
+  - Kernel kconfig
++ Unexpected config problems
++ Incompatiility
++ Learning Curve for new tools
+  - init system (init.d, runit, init...x)
+  - Gnome (or gnome alternatives)
+  - configuring KDE/Plasma?
+
+** Transition Process
+
+*** Arch with pacman + guix
++ identify packages/groups that are easy to port with
++ start building base guix package groups
+  - build specific groups
++ decide how to handle DKMS hooks
+  - this is a real fucked up gotcha
+  - if it hooks your DKMS, guix is probably hard
+  - i.e. nvidia, kernel modules, zen kernel
+  - there are a lot of wrong answers to this and probably some simple ones.
+
+*** Quickly try Guix System
+
+** Resources
+
+*** Captured from videos & initial exploration:
++ [[https://gitlab.inria.fr/guix-hpc/website/blob/master/posts/cwl-guix-ipfs-workflow.md][Reproducible Builds with Guix, IPFS & CWL]]
+  - IPFS Inter Planetary File System
+  - CWL Common Workflow Language
+
+
+* Kernel
+
+** Configuration
+
+*** [[https://www.kernel.org/doc/html/latest/kbuild/index.html][Kbuild]] kernel build system
+**** [[https://www.kernel.org/doc/html/latest/kbuild/kconfig-language.html][Kconfig]] language (and )
+
+** Builds
+
+** Build Workflows

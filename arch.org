@@ -97,7 +97,8 @@ systemctl start reflector.service
 systemctl disable reflector.service
 #+END_SRC
 
-after successful refresh/selection of mirrors, enable the timer:
+after successful refresh/selection of mirrors via =reflector.service=, enable
+the [[https://wiki.archlinux.org/title/Systemd/Timers][systemd timer]]
 
 #+BEGIN_SRC shell :tangle no
 #!/bin/bash
@@ -133,60 +134,25 @@ systemctl start reflector.timer
 
 setup services:
 
-
-  
-
-*** TODO configure [[https://wiki.archlinux.org/title/Reflector][reflector.service]] [/]
-
-+ [ ] enable reflector.service
-+ [ ] edit reflector.timer 
-+ [ ] add a degree of randomization (shuffle the top mirrors)
-
-+ pacman-contrib =/usr/bin/rankmirrors= can also reorder mirrors
-+ is there a means of collecting stats on which mirrors were selected to determine bias?
-  - yes: analyze the pacman logs
-
-*** TODO find out what purpose =/etc/pacman-mirrors.conf= has
-
 ** System D
 
-- =reflector.service= uses a [[https://wiki.archlinux.org/title/Systemd/Timers][systemd timer]]
+
++ [[https://www.computernetworkingnotes.com/linux-tutorials/systemd-unit-configuration-files-explained.html][SystemD Configuation Explained]]
 
 *** GUI management tools
-
-- why are tools like these not bundled in by default to distro installs?
-  - why is social isolation fucking ruining my life? 
-  - there are so many technology terms/acronyms/options that i have never *heard* spoken
-    - let alone seen someone use .... EVER
-
-- systemd-ui/systemdgenie are both available from aur
-
-**** systemdgenie
-
-+ this is qt/kde
-+ OH BUT WAIT: THERE'S AN APP FOR THAT TOOOO
-  - goddammit this social isolation is killing me
-
-**** systemd-ui
-
-TODO: try it?
-
++ use =systemdgenie= if using systemd
+  - systemd-ui (try it?)
+  - both are available from AUR
 
 *** Emacs
-
 Emacs can be run as a systemd unit (in server mode)
 
-
-
-
 *** Timers
-
 + Check the least frequent BTRFS timer =btrfs-scrub@-.timer=
   - it has malformed unit id (& etc). 
   - there is a problem with BTRFS being unable to delete prior updates
   - backups may not be purged or created properly
   - also, the system may not be able to reconcile the pre-March 2021 BTRFS backups
-
 
 ** Automation
 
