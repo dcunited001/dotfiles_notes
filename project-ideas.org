@@ -18,7 +18,12 @@ to DSP computations AFAIK)
 
 ** Emacs
 
-*** pacman/AUR interface
+*** pacman/AUR/yay interface
 
 this would be nice
 
+*** package to ingest/deconstruct metadata for various commands to brainstorm elisp dev ui/ux
+
+- ... "di/dx"
+- e.g. reflect on zsh completion to figure out what's relevant to implement with emacs-lisp (maybe a better way to do this)
+- reflect on other doc sources (man, info) to elucidate a binding surface

@@ -9,6 +9,7 @@
 - [[#wayland][Wayland]]
   - [[#wayland-overview-02][Wayland Overview]]
   - [[#pipewire][Pipewire]]
+    - [[#first-things-first][First things first:]]
     - [[#journey-the-4th][Journey the 4th]]
     - [[#journey-the-5th][Journey the 5th]]
     - [[#misc][Misc]]
@@ -34,6 +35,91 @@ XMonad intersects with Wayland.
 Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
 the most problems so far. This has happened on either laptop about 5 times since
 October 2020.
+
+
++ and again the archwikis/links for reference:
+  - [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture][ALSA]]
+  - [[https://wiki.archlinux.org/title/PipeWire][PipeWire]]
+  - [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture/Troubleshooting][ALSA Troubleshooting]]
+  - [[https://www.mjmwired.net/kernel/Documentation/sound/alsa/ALSA-Configuration.txt][Advanced ALSA modules config]]
+  - [[https://www.volkerschatz.com/noise/alsa.html][ALSA Concepts]]
+  - This [[https://forum.garudalinux.org/t/pipewire-not-detecting-any-audio-device/7051][Garuda thread]]
+
+*** First things first:
+
+The other sections that follow are what I tried before looking at it as an =alsa= problem instead of a =systemd= problem, which was a huge mistake considering systemd wraps things ...
+
++ look at the damn archwiki's
+  - everything else has had me running in circles...
+
+
++ This should be sufficient for getting ALSA working again.
+  - the pipewire service units (user services) may have a service loading order
+    problem. the solution to this is a timer for kicking off the hierarchy of
+    pipewire services.
+  - That should *definitely* be checked first, which i think was my problem
+    (simply hoping that removing/resintalling things would bring them
+    back.........)
+
+**** (1) Test speakers & direct soundcard access with =speaker-test=
+- hear noise? good. ALSA can directly talk to your sound card
+- if there's no noise, you have an Alsa/Hardware interface problem
+- if there is noise, you may have an Alsa configuration problem.
+  + it's best to work bottom up here because the low-level shit is easy to test, which is probably generally true greybeard wisdom
+    - i.e. knowing/using commands like =lsusb= ... or knowing simply that there
+      is a battery of linux hardware shit called =ls***= that is conveniently
+      named thus because Nuff said "unix philosophy". not having the mnemonic
+      there is disastrous.
+**** (2) now check on ALSA's configs
+- run =aplay -l= to generate device id's
+- set default devices in =/etc/asound.conf= (didn't exist for me)
+
+#+begin_src conf :tangle no
+defaults.pcm.card $id
+defaults.ctl.card $id
+#+end_src
+
+the following [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Alternative_method][alternative configuration]] section for ALSA a different config style for =/etc/asound.conf=.
+
+- it says that preferring card names over id's avoids the boot-order problem.
+
+#+begin_src conf :tangle no
+pcm.!default {
+    type hw
+    card Audio
+}
+
+ctl.!default {
+    type hw
+    card Audio
+}
+#+end_src
+
+
+**** (3) configure index order (via kernel module options)
+- run =cat /proc/asound/modules= to list the loaded sound modules (and order)
+  - other ALSA proc files are listed in the [[https://www.kernel.org/doc/html/latest/sound/designs/procfile.html][Linux Kernel docs]]
+- run =lsmod | grep snd= to get devices/modules list
+- set load order for selecting primary device in =/etc/modprobe.d/alsa-base.conf=
+  - prevent a device from being selected as primary with =-2=
+
+#+begin_src conf :tangle no
+options snd_hda_foo index=0
+options snd_hda_foo index=1
+options snd_usb_bar index=2
+#+end_src
+
+**** (4) examine hooks/files for loading of devices in =/usr/share/alsa/alsa.conf=
+
+- look at =@hooks= and =cards.@hooks= to relevant files to examine
+- =find /usr/share -name "*asound*"= can find useful stuff
+  - if you installed the docs, check =/usr/share/doc/alsa-lib-git/asoundrc.txt= for =.asoundrc= config format
+- ALSA shouldn't need anything except the default config (for me) and this looks new
+  - so move =~/.asoundrc= and =~/.config/alsacontrol/*= to =$DOTFILES/mediaconfig=
+  - from =~/.config=, link the alsa control directory. don't link =~/.asoundrc=. this decouples the config that =~/.asoundrc= is loading (which itself is referring to a copy of the default config that was in =.config/aslacontrol=)
+  - this (and pipewire and things like =alsa-topology-conf=) will be nice to know later on
+
+
 
 *** Journey the 4th
 
@@ -226,6 +312,15 @@ When you run the script, you will be asked to update to 0.6.0, which will be dow
 It must be kernel updates or systemd reconfigurations. It's affecting both my
 laptops now, two days after i exorcised the alsa daemons ... so.
 
+
+#+begin_quote
+really, the only reason I'm still at this is because I am legitimately
+interested in Wayland, Pipewire (topologies/streaming/etc) and understanding
+more about what's under the hood here.
+#+end_quote
+
+
+
 **** Planned package changes:
 
 + remove ALSA, replace with the bleeding edge develop packages
@@ -317,6 +412,51 @@ Determining which ALSA service to enable is a bit tricky. It seems like =alsa-re
 
 + Jenkies :: a clue
   - =/etc/alsa/state-daemon.conf= is nowhere to be found, which probably means the SystemD config shifted between released alsa packages and =AUR devel= packages.
+  - what i have instead are some =/etc/alsa/conf.d/= scripts for pipewire....
+
+
+**** TODO Try adding a delay to alsa-restore.service on systemd.boot
+
++ however, my system still won't run these services
+  - =alsactl restore= and =alsactl nrestore= are failing after boot and probably will during boot as well
+  - but a fresh emacs session which can't be reliably restored from =desktop.el= sounds super fun. hopefully the compilation-order issues that i'm getting won't force me to run =./bin/doom sync && ./bin/doom build= again
+    - fixing that is yet another "TODO has bought the farm" =EIEIO=
+      - do not pass go. do not collect $200.
+      - get it? because it's like the TODO's in my org file can't be reliably sequenced for execution without references blowing the shit up and forcing me to restart/rebuild?!/!?
+        - do not collect one fucking dollar
+
+from [[https://bbs.archlinux.org/viewtopic.php?id=198137][bbs.archlinux.org]]
+
+#+begin_quote
+This is a synchronisation problem: the 'alsa-restore.service' is started before the sound card is initialised in the systemd boot sequence.
+So I run again the 'alsa-restore.service' 2min later with a timer to work around this.
+#+end_quote
+
+#+begin_src toml :tangle no
+[Unit]
+Description=Timer for Restore Again Sound Card State
+
+[Timer]
+OnBootSec=2min
+
+$ cat alsa-restore-again.service
+# Started by alsa-restore-again.timer
+#
+[Unit]
+Description=Restore Again Sound Card State
+ConditionPathExists=!/etc/alsa/state-daemon.conf
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=-/usr/bin/alsactl restore
+StandardOutput=syslog
+#+end_src
+
+**** Ensure the =alsactl= daemon is functioning properly
+
+Why do the systemd
+
 
 
 *** Misc

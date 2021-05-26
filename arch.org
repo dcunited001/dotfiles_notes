@@ -36,7 +36,6 @@ the most recently updated ...
   - but my system crashed and wompwomp i didn't condition it's usage for long enough to remember
 - social isolation in technology is killing me
 
-
 Octopi makes it hard to use AUR, afaik
 
 - requires clicking enable AUR, then restarting
@@ -60,6 +59,18 @@ TODO: try it
 - this is nice
 
 ** Reflector
+
+#+begin_quote
+mirrors aren't such a big deal with guix, although there are other issues
+#+end_quote
+
+
++ get mirrors from countries: nl,ca,uk,us,de,fr,es,kr,jp
+  - HTTPS & IPv6 only
+    - IPv6 is IPSec [[https://www.redhat.com/sysadmin/ipv6-packets-and-ipsec][by default]]
+    - ... kinda (see [[https://www.rfc-editor.org/info/rfc6434][RFC 6434]] apparently
+  - of the fastest, select 25
+  - then sort by score (randomness)
 
 *** Setup
 
@@ -109,34 +120,24 @@ systemctl start reflector.timer
 + The defaults are fine, but to edit: ~systemctl edit reflector.timer~
   - Persistent means it will run if the calendar time is missed
   - RandomizedDelaySec means it won't run after a calendar time unless =12h= has passed
-
-#+BEGIN_SRC toml :tangle no
-### /usr/lib/systemd/system/reflector.timer
-# [Unit]
-# Description=Refresh Pacman mirrorlist weekly with Reflector.
-#
-# [Timer]
-# OnCalendar=weekly
-# Persistent=true
-# AccuracySec=1us
-# RandomizedDelaySec=12h
-#
-# [Install]
-# WantedBy=timers.target
-#+END_SRC
-
-+ get mirrors from countries: nl,ca,uk,us,de,fr,es,kr,jp
-  - HTTPS & IPv6 only
-    - IPv6 is IPSec [[https://www.redhat.com/sysadmin/ipv6-packets-and-ipsec][by default]] 
-    - ... kinda (see [[https://www.rfc-editor.org/info/rfc6434][RFC 6434]] apparently  
-  - of the fastest, select 25
-  - then sort by score (randomness)
+  - Defaults can be found in [[file:/usr/lib/systemd/system/reflector.timer][/usr/lib/systemd/system/reflector.timer]]
 
 setup services:
 
+
+** A Healthy Dose of Docker...
+
+is there a simple way to use docker containers to cull out excessive systemd
+units?
+
+*** Debloat Packages & SystemD Units
++ loading hundreds of units is ridiculous
++ allowing like 250+ units each for system/user stuff is a bit ridiculous
+
 ** System D
 
-
++ Some highly opinionated reasons not to use [[https://chiefio.wordpress.com/2016/05/18/systemd-it-keeps-getting-worse/][SystemD]]
+  - it's not easy to [[https://www.youtube.com/watch?v=_ljfOCiP0XM&t=690s][find an alternative]] init system that [[https://www.youtube.com/watch?v=o_AIw9bGogo][solves these problems]]
 + [[https://www.computernetworkingnotes.com/linux-tutorials/systemd-unit-configuration-files-explained.html][SystemD Configuation Explained]]
 
 *** GUI management tools

@@ -16,6 +16,7 @@
 + Fuzzy timesinks
   - XMonad?
   - Kernel kconfig
+  - zsh autocompletion (autoconfigured well by garuda/omz)
 + Unexpected config problems
 + Incompatiility
 + Learning Curve for new tools
