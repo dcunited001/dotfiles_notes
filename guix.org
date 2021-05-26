@@ -46,6 +46,37 @@
   - CWL Common Workflow Language
 
 
+* Init Systems
+
+Probably go with Shepherd, Runit or a hybrid system (examine Artix)
+
++ Links:
+  - [[https://wiki.artixlinux.org/Site/PipewireInsteadPulseaudio][pipewire without systemd]]
+  - [[https://wiki.artixlinux.org/][Artix wiki]] (esp. elogin, openrc, runit, s6, suite66)
+  - [[https://forum.artixlinux.org/index.php/topic,644.0.html][Runit vs. OpenRC]]
+
+** Dilineate roles/pros/cons for init systems
+
+*** GNU Shepherd
+
+*** elogin
+
+*** openrc
+
+*** runit
+
+*** s6
+
+*** suite66
+
+*** [[https://github.com/troglobit/finit][finit]]
+
+* Hardware
+
+** udev
+
+- intro to [[https://opensource.com/article/18/11/udev][scripting udev]]
+
 * Kernel
 
 ** Configuration

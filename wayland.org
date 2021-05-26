@@ -28,14 +28,22 @@ XMonad intersects with Wayland.
 
 ** TODO Wayland Overview [0/2] :wayland:
 + [ ] assess how close my system really is to 100% wayland
-+ [ ]
 
 ** Pipewire
+
+#+begin_quote
+smdh i guess i forgot that alsa/pipewire packages are not friendly to each
+other... ALSA services are broken on my 2011mbp but pipewire services startup
+fine without them..... . . . .
+
+there really are no words to explain this feeling
+
+on the other hand, this guy is [[https://adam.younglogic.com/2021/04/unifying-audio-with-pipewire/][using pipewire to stream audio]] to [[https://jamulus.io/][jamulus.io]].
+#+end_quote
 
 Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
 the most problems so far. This has happened on either laptop about 5 times since
 October 2020.
-
 
 + and again the archwikis/links for reference:
   - [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture][ALSA]]
