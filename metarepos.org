@@ -5,18 +5,39 @@
 #+STARTUP: content
 #+OPTIONS: toc:nil
 
+* Meta Repos
+
+using google's repo's tool
+
+- [[https://www.instructables.com/Using-Googles-repo-command-in-your-own-projects/][how to set up in other new projects]]
+
+** Main Question (before doing this)
+
++ can many =*.xml= files share a repo when they do not produce a common manifest?
+  - if so, it's possible to create a repo with a bunch of these manifests and serve them into repos...
+    - which would need to be branches or workgroups.
+    - so probably not, but the Chromium/Android projects are huge (each easily 15+ gb if not careful with =repo=)
+
+*** Some concepts:
+- the manifests are mostly meant to exist remotely (to config groups of builds/repos or etc). it would seem that they are also meant to mostly be managed remotely (esp. at google)
+- there is an alternative tool whose design is based on repo, but which doesn't force you to store a manifest in a separate repo ... but it would seem that manifest/s/ must exist in their own repo.
+  - whether you can pull off hosting a dozen of them in one repo remains
+    unclear. certainly this was not the intent of Google
+  - you can =<include name=fdsa.xml/>= in xml files to split out remotes, but this is intended to produce mostly one main =xml= file (which other devs may expect to layer changes onto; branches/groups/etc)
+    - repo branching would make multiple =xml manifests= in a single "repo
+      repo" problematic. (branching could theoretically be used to provide this feature of multiple XML's in one reporepo .... but that's insane)
+  - so it looks like the guy who wrote the alternative repo tool is correct: it don't do that (which isn't that big of a deal)
+- Some caveats:
+  - The =./repo= folder is meant the only of it's kind (afaik?) at the root of a repo project.
+  - symlinks in paths have a quite a few rules in them.
 
 * Metarepo
-
-
-
 
 ** [[https://github.com/canatella/repo-el/blob/master/repo.el][Repo]] (google tool, [[https://github.com/GerritCodeReview/git-repo][github mirror]])
 
 + Install =sudo pacman -Syu repo=
 
 *** Repo setup
-
 + =default.xml= [[https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md][manifest format]] documentation
   - see info on local manifests (these inherit many properties)
 + [[https://gerrit.googlesource.com/git-repo/+/HEAD/docs/repo-hooks.md][repo hooks]] documentation
@@ -29,7 +50,6 @@
 *** Emacs Integration: [[https://github.com/canatella/repo-el][repo-el]]
 
 *** System Setup
-
 Ideally, for all reference projects, i would like one =/data/dev/metarpo=
 project that contains all the metadata, while the actual contents of these are
 spread out into various =/data/dev= directories

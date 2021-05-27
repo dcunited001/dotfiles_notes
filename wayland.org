@@ -7,7 +7,6 @@
 
 * Table of Contents :TOC_3_gh:
 - [[#wayland][Wayland]]
-  - [[#wayland-overview-02][Wayland Overview]]
   - [[#pipewire][Pipewire]]
     - [[#first-things-first][First things first:]]
     - [[#journey-the-4th][Journey the 4th]]
@@ -25,11 +24,11 @@ XMonad? KDE activities aren't well supported and are not likely to be in the
 near future. I've only scraped the surface of Wayland/KDE and I'm not sure how
 XMonad intersects with Wayland.
 
-
-** TODO Wayland Overview [0/2] :wayland:
-+ [ ] assess how close my system really is to 100% wayland
-
 ** Pipewire
+
+Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
+the most problems so far. This has happened on either laptop about 5 times since
+October 2020.
 
 #+begin_quote
 smdh i guess i forgot that alsa/pipewire packages are not friendly to each
@@ -41,11 +40,22 @@ there really are no words to explain this feeling
 on the other hand, this guy is [[https://adam.younglogic.com/2021/04/unifying-audio-with-pipewire/][using pipewire to stream audio]] to [[https://jamulus.io/][jamulus.io]].
 #+end_quote
 
-Pipewire plans on replacing PulseAudio in Wayland. This is where I've run into
-the most problems so far. This has happened on either laptop about 5 times since
-October 2020.
++ uniinstall all non-essential alsa dependencies with:
+  - =sudo pacman -Rnss alsa-utils-git alsa-capabilities asoundconf alsa-control
+    python-pyalsaaudio=
++ these orphaned dependencies can be found with:
+  -  =pacman -Qdt= (if installed as deps and are orphans)
++ and can asserted to be orphans with =pactree -r -d2 alsa-*=
++ i kept running into this problem bc i would experiment with Garuda's Alsa
+  install, which doesn't cause problems until the next system boot its services
+  installed by =alsa-utils= intercept devices on boot... so i didn't associate
+  ALSA with problems (or something?)
+  - the Garuda assist tool introduced me to a lot of these components. the
+    source has helped alot too. this clicked quickly with Pulseaudio and Jack
+    ... but never solidified with alsa/pipewire
+  - holy shit.
 
-+ and again the archwikis/links for reference:
+ again the archwikis/links for reference:
   - [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture][ALSA]]
   - [[https://wiki.archlinux.org/title/PipeWire][PipeWire]]
   - [[https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture/Troubleshooting][ALSA Troubleshooting]]
