@@ -1,5 +1,11 @@
 * Guix
 
+** Linux, Generally
+
++ Linux [[https://en.wikipedia.org/wiki/Category:WikiProject_Linux][WikiProject]]
+  + [[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Desktop_Linux][Desktop Linux]] page (not linux from their main page)
+  + Linux[[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Linux][WikiProject Category]]
+
 ** Guix System
 
 *** Potential Problems with an Early Switch

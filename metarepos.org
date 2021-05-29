@@ -10,6 +10,8 @@
 using google's repo's tool
 
 - [[https://www.instructables.com/Using-Googles-repo-command-in-your-own-projects/][how to set up in other new projects]]
+- sel4 systems: [[https://docs.sel4.systems/projects/buildsystem/repo-cheatsheet.html][Google Repo cheatsheet]]
+
 
 ** Main Question (before doing this)
 
