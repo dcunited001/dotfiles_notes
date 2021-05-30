@@ -1,25 +1,98 @@
-* Notes
+* Org
 
-Some of my notes on configurations. My most recent linux installs from 3/2021 are not included.
+My org folder, which probably won't be public for much longer.
 
-*** IDEA apparently this is simply what the ~~/org~ project was supposed to be ... something i would never simply know since I've never even so much as seen someone use Emacs while living in Roanoke, VA
 
-* Personal ~org-mode~ philosophy:
+** Modeling Org Processes
 
-** OKAY So I'm still a noob...
++ The [[https://github.com/daviwil/dotfiles/blob/master/Workflow.org][System Crafters Mode Workflow docs]] were immensely helpful in understanding where i went wrong. i have a ton of inertia in the wrong direction (and still no new capture templates)
 
-... but notes/etc in this section should serve to cultivate good habits ... and to trim away habits that would seem to lead to some certain doom -- i.e. ~death by 1,000 errant TODO's~
 
-** TODO every TODO should be written to be thrown away instantly
-** TODO hmmmmm
+  - following those guidelines will help avoid all this mess below where i trying to address the sheer number of poorly structures org files...
+    - i'm trying to force myself to rethink concepts like tag, node/hierarchy,
+      file/path, state, capture, refile... by tearing down socially constructed notions of what i think a "tag" is
 
-* [[./etc.org]]
+*** There are four main types of "dimensions":
++ Org.Path :: filesystem path.
+  - almost entirely absolute/hierarchical
+    * i.e. whether the org-file is considered by org-agenda/views or not.
+  - relations are slow to change.
+    - changes to set membership by moving files are significant (they affect
+      items on a file-by-file basis)
+    - changes to agenda view membership are also significant
++ Org.Structure :: the org structure/placement of an item
++ Item.States :: state in a statemachine
+  - can be linear, a DAG (tree), a markov/graph
+  - in emacs, this is assumed to be a mostly linear DAG
+    - i.e states follow one after the other until the end
 
-This should be a /mostly literate/ file declarative configuration of:
++ Item.Tags :: string --> boolean (mostly)
+  - can imply more complicated info. groups & mutually exclusive tags make
+    them a bit more complicated
 
-** Subtrees of file-system paths for projects and languages
+*** It isn't very helpful to mathematically reduce them in this way: it doesn't lead to enough constraints to simplify anything. however:
 
-** Repo URL's which should be cloned into a tree of subdirectories
-*** like the github repos of interest i've listed in various ~README.md~ files
++ The *org.path* dimension joins the *org.structure* dimension each docroot.
+  - They are both hierarchical dimensions
+  - However, variables like =org-agenda-files= don't act on headings & org-structure. Only paths are filtered.
+  - The rules in emacs & filesys govern how paths are interpreted by org-agenda,
+    whereas the user is far more flexible in determining the relative
+    org/structure of headings within the doc root. they are both hierarchical,
+    but different rules apply.
++ There are similar differences b/w the state/tag dimensions:
+  + how to change the TODO state of various items is up to the user, but emacs must be configured with the state machine logic.
+  + The user has more flexibility when determining how to treat items with tags.
+  + But TODO state is =one-to-one= whereas tags are =many-to-many= (except in
+    the case of hierarchical TODO headings where state is being tracked)
 
-** The idea here is that I'm documenting what i'm doing so that it can be extended with minimal effort, regenerated if needed and easily found without looking
+*** Org Capture templates define edge transitions in a hypergraph.
+  - if an item's org.path changes, its relative placement to other elements in the org.structure is basically obliterated.
+    + with some exceptions, like if multiple =todo.org= files share mostly the same headings structures
+
+*** Modeling processes in org-mode is still just as complicated
++ after all, these processes are supposed to allow us to capture almost any idea
+  and track it like any other task.
++ the scope of inter-project org-agenda things i need to do is too broad.
++ worse: the org files/processes i'm using require that there is
+  consensus/reflection of data (like categories of =.doom.d/config.org=
+  sections) between files, directories and projects ... some of which haven even been created
+  - when i move these TODO items to a new file, their significance/meaning
+    becomes blurred (since their neighboring headlines & org.structure weren't
+    necessarily carried with them)
+  - this is like an org-mode "anti-pattern" but it was hard for me to see. it's
+    probably best for noobs to keep their usage of org-agenda confined to a
+    specific set of projects (initially somthing other than dotfiles, since
+    those projects are so general)
+
+*** Concepts
++ there are major distinctions arising from system-governed logic and
+  user-governed "norms and processes" (rules, yes, but not absolute)
+  - these should cause the various types of org-mode objects/properties (like
+    nodes, tags, states, etc) to fit in some circumstances better/worse or just
+    differently than in other cirucmstances
+  - that is, the org-mode objects don't have any single intended purpose (but
+    were maybe thought to be a sufficient set of data structures to cover the
+    bases)
++ data in org-mode should maybe be thought of as a type of programming (like a functional style of object-oriented programming)
+  - esp when imagining/designing org-capture templates or states/processes or
+    org-refile, etc.
+  - so the running =org-capture= is utilizing a monoid that:
+    - transforms an org-node's structure, integrating components of other
+      objects/nodes, while changing its state (and probably getting user input)
+    - then files the transformed node into a new location:
+      - where new rules apply to it (either system-governed or user-governed)
+
+*** Questions
++ is it a bad habit to use recursive tags everywhere?
+  + YES.... ABSOLUTELY YES
+    - this tag/title information is being duplicated in a lot of my headers.
+    - it doesn't help filter for search (in fact, it hurts a bit)
+    - worse, it means that your processes in one file (if you have org-agenda
+      views on :tags:) then implicitly assume that tag information is
+      duplicated in the header structure.
+      - i.e you will tend to have processes with implicit assumptions about
+        tagged headlines siblings also having tags which duplicate their
+        headlines.
++ can i select items with TODO state which have not been treated with enough metadata to show up in agenda views?
+  - probably
++ how can i reuse agenda views or programmatically define them?
