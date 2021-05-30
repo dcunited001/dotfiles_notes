@@ -7,7 +7,9 @@
 
 * Ideas for KDE
 
-- [[https://wiki.archlinux.org/index.php/KDE][KDE Archwiki]]
+** Automating Session/Window Management in KDE
+
+***   [[https://wiki.archlinux.org/index.php/KDE][KDE Archwiki]]
 
 *** Surveying the potential endpoints for automation
 
@@ -63,3 +65,5 @@ where:
   topicspace state requirements)
 
 **** requires capabilities of [[https://wiki.haskell.org/Xmonad/Mutable_state_in_contrib_modules_or_xmonad.hs][XMonad with Mutable State]]
+
+**

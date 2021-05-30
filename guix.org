@@ -4,12 +4,23 @@
 
 + Linux [[https://en.wikipedia.org/wiki/Category:WikiProject_Linux][WikiProject]]
   + [[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Desktop_Linux][Desktop Linux]] page (not linux from their main page)
-  + Linux[[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Linux][WikiProject Category]]
+  + Linux [[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Linux][WikiProject Category]]
 
 ** Guix System
 
+*** Concepts
+
++ Shepherd services
+
+*** Misc
++ uses Weblate for translations
+
+** Transition Process
+
 *** Potential Problems with an Early Switch
 
++ Misc overhead
+  - Need to clear a harddisk to backup APFS + DJ image
 + Managing multiple systems
   - =/home/dc= may not seemlessly port between both systems
     + potential state problems here
@@ -23,14 +34,16 @@
   - XMonad?
   - Kernel kconfig
   - zsh autocompletion (autoconfigured well by garuda/omz)
+  - figuring out Garuda/Zen performance optimizations
 + Unexpected config problems
+  - Configuring DKMS (in guix) to autoload kernel modules
 + Incompatiility
+  - BTRFS
+  - Zen Kernel?
 + Learning Curve for new tools
   - init system (init.d, runit, init...x)
   - Gnome (or gnome alternatives)
   - configuring KDE/Plasma?
-
-** Transition Process
 
 *** Arch with pacman + guix
 + identify packages/groups that are easy to port with
@@ -88,8 +101,47 @@ Probably go with Shepherd, Runit or a hybrid system (examine Artix)
 ** Configuration
 
 *** [[https://www.kernel.org/doc/html/latest/kbuild/index.html][Kbuild]] kernel build system
-**** [[https://www.kernel.org/doc/html/latest/kbuild/kconfig-language.html][Kconfig]] language (and )
+**** [[https://www.kernel.org/doc/html/latest/kbuild/kconfig-language.html][Kconfig]] language
+
+** Optimizing/Hardening Configs/Flags
+
++ (ArcoLinux Youtube) [[https://www.youtube.com/watch?v=d9e5rI-OCWU][Comparing configs for Linux, Linux-Zen and Linux-Hardened kernel using diff]]
++ So much shit in the kernel is _apparently_ not needed
+
+
+*** Hypothetical problems with overeager optimizations
+
+- much of it may be more necessary than we mere mortals may think, should one want to simply /install/ prebuilt package binaries
+- i.e. the "surface area" for statically linking binaries to static/dynamic binaries that link to kernel may have unexpected "incompatible facets"
+  + it depends. obv, most people do not bother with static linking...
+  + but if static/dynamic program addresses are missing (e.g. after an entire
+    category of features is optimized away by a kernel build dropping too much
+    behavior) that DLL's & ELF's expect to link to then this requires:
+    - something like "compile-tile nil coalescence" to provide an named
+      address a linker/DLL/ELF can specify which executes/handles mostly nil
+      behavior (i.e. standard features that were kconfig'd out of a custom
+      kernel)
+  + a more clear example: you built a custom kernel, but the kernel compiler
+    decided many API headers for standard Linux features were not necessary to
+    make available to future application builds or linking applications.
+    + obviously, this shouldn't really happen (the c/c++ headers spec the API and future builds/ELFS need to link against a standard without too much compile-time or run-time config). it is mostly handled in c/c++ specs and compiler spec/implementation, but to prevent it from happening, behavior must be positively added. (consensus about future build/runtime expectations must occur)
+      - the point is, there are probably corner cases one encounters when using overly minimal =kconfig= where future builds/linking against the minimal kernal produces build/runtime problems with unexpected behavior...
+
+#+begin_quote
+That's not exactly authoritative (this repo is going away soon)
+#+end_quote
+
 
 ** Builds
 
 ** Build Workflows
+
+
+* Linux Virtualization
+
+** libvirt
++ GUI
+  - Kimchi
+  - VMM
+  - PVE
+** Proxmox

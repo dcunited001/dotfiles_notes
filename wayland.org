@@ -7,6 +7,7 @@
 
 * Table of Contents :TOC_3_gh:
 - [[#wayland][Wayland]]
+  - [[#learning][Learning]]
   - [[#pipewire][Pipewire]]
     - [[#first-things-first][First things first:]]
     - [[#journey-the-4th][Journey the 4th]]
@@ -23,6 +24,14 @@ For now, I'm running on KDE, but I plan on switching to XMonad + KDE soon. Why
 XMonad? KDE activities aren't well supported and are not likely to be in the
 near future. I've only scraped the surface of Wayland/KDE and I'm not sure how
 XMonad intersects with Wayland.
+
+** Learning
+
++ XR Desktop [[https://www.collabora.com/news-and-blog/news-and-events/moving-the-linux-desktop-to-another-reality.html][Moving the Linux Desktop to Another Reality]]
+  - Gulkan :: glib wrapper for vulkan
+  - GXR :: XR API abstraction
+  - XRDesktop :: A 3DUI window management lib
+
 
 ** Pipewire
 
