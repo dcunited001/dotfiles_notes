@@ -3,14 +3,85 @@
 My org folder, which probably won't be public for much longer.
 
 
-** Modeling Org Processes
+** Intro
+
+*** Getting Started
+
++ this is definitely not the best doc to use if you're just getting started, nor
+  is it comprehensive.
+  - However, it is technically inclined and attempts to establish some first
+    principles that demonstate some processes are objectively better or at least
+    objectively simpler.
 
 + The [[https://github.com/daviwil/dotfiles/blob/master/Workflow.org][System Crafters Mode Workflow docs]] were immensely helpful in understanding where i went wrong. i have a ton of inertia in the wrong direction (and still no new capture templates)
-
 
   - following those guidelines will help avoid all this mess below where i trying to address the sheer number of poorly structures org files...
     - i'm trying to force myself to rethink concepts like tag, node/hierarchy,
       file/path, state, capture, refile... by tearing down socially constructed notions of what i think a "tag" is
+
+*** Markdown is "text with some structure" whereas Org is "structure with some text"
+
++ the structure of your text matters a lot and you need to think about it ahead
+  of time.
++ you need to decide early on whether you're going to use =org-agenda=, specifically the =capture= and =refile= functions.
+  - this is going to affect how you approach URL design (which makes
+    capture/refile more natural)
++ like I did with deciding on =org-mode= itself, you may decide that some parts
+  of org-mode are appropriate to learn later.
+  - this makes a ton of sense, as emacs itself is huge and usually the best way
+    to do this is to break things down into parts
+  - that's what i did and i regret it because now org-agenda is basicallty
+    unusable. one should instead spend a ton of time AFK (or away from IDE) with
+    =emacs-wiki= and =orgmode.org= docs, simply ingesting all of it.
+    + it's not critical to know everything, but it is critical to understand
+      that =a postieri= knowledge gained from experience is expensive as hell
+    + i.e. an approach where "you dogfood org-mode until one day you get it" may
+      simply be a way to create 10,000 problems
+
+*** While all org files end in =*.org= they do not all have the same format
+
+When creating new org-mode files decide early on:
+
++ Is this a documentation file? A public documentation file?
++ is this an =org-babel= notebook?
++ is this a literate file to be exported to one file? many files?
++ is this a file to generate HTML for a website? LaTeX?
++ is this an org-agenda file? is it an org-agenda source? a sink?
+  - notice how few references to org-agenda you see in public repositories...
+  - you want some files to be sources (this is where you capture random ideas to refile later)
+  - you want other files to be sinks (this is where you refile things to go when you want them to be at the top of your queue)
+  - you may want a backlog.org file (or tag), which org-agenda ignores
++ is this a special org file? i.e. =org-habit= or an =org-drill=
++ is this a file where I want stable references to be linked from elsewhere?
+  - i.e. google doesn't like broken backlinks in HTML and you should avoid them
+    in org-mode. to do that, you need to plan ahead.
+
+just like XML files may have different XSD schemas, org files (or subtrees!)
+have different formats. some of these conventions are well established norms and
+others are personal conventions.
+
++ however, if you do not approach the process of deciding on the format, rules,
+  & conventions to apply, you may end up with a mess and a waste of time.
+
+*** It isn't immediately helpful to mathematically analyze org-mode data structures
+
+As it doesn't lead to enough constraints to simplify anything
+
+#+begin_quote
+"you have not enough countability"
+#+end_quote
+
+setting aside philosophical arguments about whether infinity actually exists or
+not, there are some data structures that lend themselves to more efficient
+organization and more practical assumptions.
+
++ in org-mode we can't actually have infinite data, but conventions in usage
+  will greatly reduce the level of thought/effort required to make org-mode &
+  org-agenda useful.
+  - if you don't understand how the notions of countability extend to
+    indexibility
+
+** Modeling Org Data for Processes
 
 *** There are four main types of "dimensions":
 + Org.Path :: filesystem path.
@@ -25,20 +96,24 @@ My org folder, which probably won't be public for much longer.
   - can be linear, a DAG (tree), a markov/graph
   - in emacs, this is assumed to be a mostly linear DAG
     - i.e states follow one after the other until the end
-
 + Item.Tags :: string --> boolean (mostly)
   - can imply more complicated info. groups & mutually exclusive tags make
     them a bit more complicated
 
-*** It isn't very helpful to mathematically reduce them in this way: it doesn't lead to enough constraints to simplify anything. however:
+*** Structure File Paths and headings to create simple
 
-+ The *org.path* dimension joins the *org.structure* dimension each docroot.
++ The *org.path* dimension joins the *org.structure* dimension at each docroot.
   - They are both hierarchical dimensions
   - However, variables like =org-agenda-files= don't act on headings & org-structure. Only paths are filtered.
   - The rules in emacs & filesys govern how paths are interpreted by org-agenda,
     whereas the user is far more flexible in determining the relative
     org/structure of headings within the doc root. they are both hierarchical,
     but different rules apply.
+
+#+begin_quote
+aha, that is somewhat constraint-like
+#+end_quote
+
 + There are similar differences b/w the state/tag dimensions:
   + how to change the TODO state of various items is up to the user, but emacs must be configured with the state machine logic.
   + The user has more flexibility when determining how to treat items with tags.
@@ -81,6 +156,16 @@ My org folder, which probably won't be public for much longer.
       objects/nodes, while changing its state (and probably getting user input)
     - then files the transformed node into a new location:
       - where new rules apply to it (either system-governed or user-governed)
++ the =org.structure= nodes form the basis of a hypergraph
+  - the relative hierarchical relationships b/w org nodes provides a limited set of edges in a graph
+    - these properties are similar what makes DAG's act like DAG's
+    - on the other hand, (in addition to other ways of using them) tags can be
+      used as edges to logically glue together org nodes from disparate headline
+      trees or files.
+  - the filesystem can also be imagined as a basis for a hypergraph, but this is
+    overshadowed by how file boundaries partition the vertexsets of separate
+    hyper-subgraphs for each orgfile
+    - which can still be glued together with tags/states/properties/etc
 
 *** Questions
 + is it a bad habit to use recursive tags everywhere?

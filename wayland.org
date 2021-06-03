@@ -13,6 +13,8 @@
     - [[#journey-the-4th][Journey the 4th]]
     - [[#journey-the-5th][Journey the 5th]]
     - [[#misc][Misc]]
+  - [[#xwayland][XWayland]]
+    - [[#libinput-problems][libinput problems]]
 
 * Wayland :wayland:
 
@@ -503,3 +505,7 @@ May 03 05:39:43 mbp2011 sudo[278758]: pam_systemd_home(sudo:account): systemd-ho
 
 systemd-udevd[286]: controlC0: Process '/usr/bin/alsactl restore 0' failed with exit code 99.
 #+end_quote
+
+** XWayland
+
+*** libinput problems

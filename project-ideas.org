@@ -27,3 +27,64 @@ this would be nice
 - ... "di/dx"
 - e.g. reflect on zsh completion to figure out what's relevant to implement with emacs-lisp (maybe a better way to do this)
 - reflect on other doc sources (man, info) to elucidate a binding surface
+
+*** PIPEDREAM =org-fs=
+
++ org mode overlay for a filesystem (either an actual disk or a logical overlay in fstab/mtab, kinda like /dev/loop)
+  - directories and files would be indistinguishable
+    - in the case of an actual disk format, directories would have an efficient listing of inodes for files but would also have file content themselves
+    - either way, files/directories could be exposed as an org-document where the directories and files are like special types of headlines.
++ the point here is that, for all intensive purposes, a system of fs-paths is *implicitly* part of an org file or of a system of org-files
+  - it is reflected through all the back/links, agenda views, etc.
+  - it's hard to use org-mode without reflecting meta/data about the FS back into your org docs. this makes them even more personal than they already are, which makes them hard to share and not very sociable.
+
++ hard to say whether this is actually a good idea or not. either way, it's underdeveloped bc i don't want to spend too much time on it. \
+  - this idea needs some more rounds of _Five Why's_ and a few pivots
+
+*** IDEA Characteristica (Leibniz): refine an acceptably universal system of providing ligatures (and perhaps input entry)
++ take inspiration from systems of metaphysics (tao/iching), grapheme
+  organization and deciding on primatives/keywords for programming languages
++ specifically, look at how Haskell organizes/notates its higher-order functions
++ how can one system be decidedly universal (by either being the nadir of complexity or scoring optimally according to similarity)
++ proving its optimality by using computational linguistics techniques on AST's
+  or on the elements of lexxers
+*** IDEA which-key-rainbow
++ colorize which-key output (map the space of ROYGBIV => [a-zA-Z0-9])
++ going to be a little difficult if it's not a hacky patch over which-keys
+*** IDEA unpack a tmux config to a buffer layout in emacs.
++ kinda mesh tmux & burly
+*** IDEA measure cyclomatic complexity for org-agenda (todo's, tags, filters)
++ it won't work if:
+  - if it's not simple for the user to config/run
+  - and if it doesn't provide feedback when the cyclomatic scores are poor
++ otherwise it should be fairly simple:
+  - the shape, interlinking and overall file path "spread" of subtrees should
+    cause the score to increase
++ bad "code smells" for org mode:
+  - too many subtrees
+  - subtrees that are too deep or too broad (this is the cyclomatic part)
+  - when it is difficult or tedious or useless to view TODO's in org-agenda
+  - inconsistent use of tags in subtree headers
++ =org-treeusage= can help do this
+*** IDEA use =ace-window= as interface for window selection in a frame
++ select a subset of windows in a frame, given avy keys for each window (with an esc key and an submit key)
++ use this to form a "reified" burly bookmark for the frame, but also store the subset of keys and their mappings to windows in that frame
++ then the idea is to create a "partially reified" burly monoid that generates new burly URL objects (that are not necessarily stored)
+  + this is a function that accepts an alist of keys/buffers to bind to the application of the burly monoid
+  + ~(apply burly-url-monoid {keys... bufferIds...})~ then either
+    1) creates a new frame based on the old frame's =window-configuration=, with the bufferId's mapped into the appropriate places or
+    2) simply modifies the current =frame='s window/buffer mapping in place (actually prone to failure)
+  + there are a lot of problems with this idea (i.e. ref's of moving targets,
+    buffers/windows that close), but it's at least a start to declaritively
+    building a set of generating functions for =frame-configs=, whether "partial" or "reified"
+*** IDEA wiktionary-mode package
++ graph-based browsing of etymology?
+*** IDEA sandbox/docker for loading =.emacs.d= or =.doom.d= and assessing their variable config values (e.g. =org-todo-keywords= or =org-capture-templates=)
+*** IDEA ob-translate features
++ variable or something to pivot the translation results table
+  - languages are column
++ ASYNC_FOR_THE_LOVE_OF_GOD
+*** IDEA project to sync org-files using a single-purpose git-repo
+- note: you may experience some friction if your set of synced files overlaps
+  with an existing repo (... or more likely many repos)
+- use =git-annex=, =git-portal= or =git-LFS=

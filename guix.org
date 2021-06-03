@@ -124,7 +124,12 @@ Probably go with Shepherd, Runit or a hybrid system (examine Artix)
   + a more clear example: you built a custom kernel, but the kernel compiler
     decided many API headers for standard Linux features were not necessary to
     make available to future application builds or linking applications.
-    + obviously, this shouldn't really happen (the c/c++ headers spec the API and future builds/ELFS need to link against a standard without too much compile-time or run-time config). it is mostly handled in c/c++ specs and compiler spec/implementation, but to prevent it from happening, behavior must be positively added. (consensus about future build/runtime expectations must occur)
+    + obviously, this shouldn't really happen (the c/c++ headers spec the API
+      and future builds/ELFS need to link against a standard without too much
+      compile-time or run-time config). it is mostly handled in c/c++ specs and
+      compiler spec/implementation, but to prevent it from happening, behavior
+      must be positively added. (consensus about future build/runtime
+      expectations must occur)
       - the point is, there are probably corner cases one encounters when using overly minimal =kconfig= where future builds/linking against the minimal kernal produces build/runtime problems with unexpected behavior...
 
 #+begin_quote
