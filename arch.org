@@ -3,6 +3,87 @@
 
 + [[https://k1sslinux.org/][KISS Linux]] (also check this out)
 
+** BTR FS
+
+** Recovery
+
+*** Check fs using [[https://stackoverflow.com/questions/30884044/how-to-fix-btrfs-root-inode-errors][btrfsck]]:
+
+The =--backup= option uses an alternative superblock to check the fs.
+
+=sudo btrfsck --progress --backup --readonly --check-data-csum /dev/sda2=
+
+Results (with default superblock)
+
+#+begin_quote
+╰─± sudo btrfsck --progress --readonly --check-data-csum /dev/sda2
+[sudo] password for dc:
+Opening filesystem to check...
+parent transid verify failed on 413398450176 wanted 523568 found 520710
+parent transid verify failed on 413398450176 wanted 523568 found 520710
+parent transid verify failed on 413398450176 wanted 523568 found 520710
+Ignoring transid failure
+ERROR: could not setup extent tree
+ERROR: cannot open file system
+#+end_quote
+
+Results with alt superblock
+
+#+begin_quote
+╰─± sudo btrfsck --progress --backup --readonly --check-data-csum /dev/sda2
+Opening filesystem to check...
+Checking filesystem on /dev/sda2
+UUID: 04f5b020-8331-49fe-916c-a672179cca30
+[1/7] checking root items                      (0:00:44 elapsed, 766588 items checked)
+[2/7] checking extents                         (0:02:11 elapsed, 123389 items checked)
+[3/7] checking free space cache                (0:00:03 elapsed, 399 items checked)
+[4/7] chunresolved ref dir 491 index 7 namelen 39 name qtshadercache-x86_64-little_endian-lp64 filetype 2 errors 4, no inode ref
+        unresolved ref dir 495 index 7 namelen 39 name qtshadercache-x86_64-little_endian-lp64 filetype 0 errors 3, no dir item, no dir index
+[4/7] checking fs roots                        (0:00:20 elapsed, 88957 items checked)
+ERROR: errors found in fs roots
+found 409902575616 bytes used, error(s) found
+total csum bytes: 394345288
+total tree bytes: 2020704256
+total fs tree bytes: 1462960128
+total extent tree bytes: 80003072
+btree space waste bytes: 333180192
+file data blocks allocated: 433565528064
+ referenced 428525404160
+#+end_quote
+
+
+*** Use [[https://www.sans.org/blog/mounting-images-using-alternate-superblocks/][Alternative Superblocks]]:
+
+Find by passing =-n= option to =mk2fs= to get it to assess/try but not act.
+
+=sudo mkfs -n /dev/sda2=
+
+
+#+begin_quote
+mke2fs 1.46.2 (28-Feb-2021)
+/dev/sda2 contains a btrfs file system
+Proceed anyway? (y,N) y
+Creating filesystem with 117534921 4k blocks and 29384704 inodes
+Filesystem UUID: 7f022f84-40aa-4338-8828-75dd844a6009
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
+        102400000
+#+end_quote
+
+now mount the btrfs =@root= with readonly (and other =/etc/fstab= options)
+
+=sudo mount -rt btrfs -o "ro,noatime,compress=zstd:3,space_cache,autodefrag,subvol=@,sb=819200" /dev/sda2 /run/media/mbp2011=
+
+the superblock is not being read properlty by =mkefs= (it warns about this) and =btrfsck= doesn't seem to specify details about the alternative superblock it's using.
+
+it would seem that there are two problems:
+
++ corruption at/near root blocks/inodes
++ and/or some kind of transaction logging problem (there is info about problems
+  that cna happen where BTRFS writes some changes before other types of changes)
++ FAT partition (grub) also corrupted
+
 ** Pacman
 
 *** =/etc/pacman-mirrors.conf=

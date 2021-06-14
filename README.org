@@ -13,11 +13,14 @@ My org folder, which probably won't be public for much longer.
     principles that demonstate some processes are objectively better or at least
     objectively simpler.
 
+*** Other workflow advice
+
 + The [[https://github.com/daviwil/dotfiles/blob/master/Workflow.org][System Crafters Mode Workflow docs]] were immensely helpful in understanding where i went wrong. i have a ton of inertia in the wrong direction (and still no new capture templates)
 
   - following those guidelines will help avoid all this mess below where i trying to address the sheer number of poorly structures org files...
     - i'm trying to force myself to rethink concepts like tag, node/hierarchy,
       file/path, state, capture, refile... by tearing down socially constructed notions of what i think a "tag" is
+
 
 *** Markdown is "text with some structure" whereas Org is "structure with some text"
 

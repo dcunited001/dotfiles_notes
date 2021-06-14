@@ -33,7 +33,8 @@ XMonad intersects with Wayland.
   - Gulkan :: glib wrapper for vulkan
   - GXR :: XR API abstraction
   - XRDesktop :: A 3DUI window management lib
-
++ [[https://tudorr.ro/blog/technical/2021/01/26/the-wayland-experience/][Should you write a wayland compositor?]]
+  + [[https://github.com/swaywm/sway][sway]] has written the generic [[https://github.com/swaywm/wlroots][wlroots compositor]]
 
 ** Pipewire
 
