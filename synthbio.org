@@ -50,8 +50,23 @@ essential oils in detail would be illuminating.
 + specifically on how beta-glycans mirror objects from statitics (specifically
   in bayesian methods)
 
+*** TODO look into the relationship between [[https://en.wikipedia.org/wiki/Echinocandin][Echinocandins]] and the human body's own beta-glucans
+
++ Echinocandins modify beta-glucan structures on the invasive or ingested fungus
+  to enable the host's immune system to recognize them more quickly
+
+#+begin_quote
+In vitro and mouse models show echinocandins may also enhance host immune
+responses by exposing highly antigenic beta-glucan epitopes that can accelerate
+host cellular recognition and inflammatory responses.
+#+end_quote
+
 * Galaxy Tools
 
 Have a look at [[https://github.com/bgruening/galaxytools][bgruening/galaxytools]] for pointers to tons of sciency tools. Most of the [[https://galaxyproject.org/][Galaxy Tools]] are hosted in Mercurial repositories in the [[https://toolshed.g2.bx.psu.edu/][galaxy tool shed]].
 
 + That I can grok most of the tool descriptions in a single pass is definitive proof of how much of a failure I am. Not sure why I can speedread academic literature, but that would probably prove useful, were society to not so singlemindedly try to shut me out of every single goddamn thing.
+
+* Open Babel
+
+[[https://openbabel.org/wiki/XML][Open Babel]] is a tool for working with molecules and stuff. More details needed.
