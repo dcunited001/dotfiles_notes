@@ -27,6 +27,36 @@ XMonad? KDE activities aren't well supported and are not likely to be in the
 near future. I've only scraped the surface of Wayland/KDE and I'm not sure how
 XMonad intersects with Wayland.
 
+** Ideas
+
+*** Graphics
+
+**** IDEA improve clarity of fonts in 3D window systems
+
+- could render drawn windows as mipmaps, but this may be difficult
+- briefly (since what comes below gets hairy and handwavey very quickly) ... another possibility for addressing the antianliasing problem is to use voxelized 3d fonts ....... (filter a depth shader with a maximum depth and run a lens blur on the rendered text beyond that ... which is not your average instagram faux blur with a fake bokeh)
+  - basically for text rendered on large flat 3D objects, it would require a material with whatever textures + the text texture. the framebuffer for the depth shader would be used to feed a paramter to a gaussian blur on the text texture only.
+- expand vector fonts or vector font processing with a tensor structure
+  - efficiently alter antialiasing of font edges according to how a flat window is presented in 3D space
+  - this may/not require changes to font formats like TTF
+  - this would be like a scale/rotation/transform-invariant way of exposing variables to GL/vulkan shader code
+    * these variables (similar to normals/dx/dy) should integrate timing/modulation of antialias effects on edges
+    * this may not work so well in interactive graphical systems 
+    * since you cannot easily anticipate pointer/touch/etc user input signals that result in scale/transform/rotation
+    * the tensor structure, over time, should attempt to conserve color/opacity values for text edges
+  - Input DOF: user persective & change in perspective 
+    * i.e. the font rendering should use the tensor structure to modulate opacity based on shifting viewing angle
+  - Output DOF: change in timing must conserve opacity
+    * since the user is driving the interactions, potential evolutions in changed opacity may need to account for potential changes in depth ... 
+    * this would require something like a depth shader tracking changes in depth between input cycles
+    * additionally, something like a depth shader crossed with Runge Kutta ... /could/ calculate at least the changes to rendered vertex calls for draws (like triangles/etc) ... 
+    * but also could outright anticipate the future raster calls for multiple potential evolutions of the system (this would be like a partial fragment shader that would merely compute 4 or 9 sets of potential fragment shader variables for the next frame)
+    * To understand, imagine predicting the path of a mouse in a 2D plane. you can't predict the curve the user will take, but based on the cursors "momentum". In this 2D simplificiation, the future partial rasterizations would be pixels of line segments whose values take on something like "one-dimensional text". Because the users perspective transformations from a single point are linear then the future *apparent changes* to the front-most rastered surfaces are approximately linear ... for short time evolutions of the system.  (for the mouse cursor example, consider potential rotations/transforms of objects whose distance from the cursor is pertinent; for the 3D example, consider perserving the luminance/tone of colors over time as the users camera changes position/rotates ... somewhat more than infinitesimally.)
+    * this may be getting crazy, but the "Asteroids" laser display required timing the laser movements across the phosphorous screen so that the amount of time spent along some line segment (s +/- ds/2) would result in fairly smooth luminance, regardless of the remainder of the lasers scheduled draw calls. so imagine a 3D analogy to that where the graphics card is projecting luminance onto surfaces where the light is reflected back to the user's camera, but must similarly preserve/smooth the luminance/chroma/hue etc. This would be like some kind of deconstructed or reversed raytracing where what is rendered are spherical coordinates (like Ubers H3 which is nigh area invariant) and the amount of light reflecting back to the camera is summed up over time.... 
+    * this is so.fucking.hard.to.explain...tired now
+    * none of this seems remotely computable anymore ... womp womp
+
+
 ** Learning
 
 + XR Desktop [[https://www.collabora.com/news-and-blog/news-and-events/moving-the-linux-desktop-to-another-reality.html][Moving the Linux Desktop to Another Reality]]
