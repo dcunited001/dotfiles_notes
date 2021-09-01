@@ -1,20 +1,5 @@
 * Guix
 
-** Linux, Generally
-
-+ Linux [[https://en.wikipedia.org/wiki/Category:WikiProject_Linux][WikiProject]]
-  + [[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Desktop_Linux][Desktop Linux]] page (not linux from their main page)
-  + Linux [[https://en.wikipedia.org/wiki/Wikipedia:WikiProject_Linux][WikiProject Category]]
-
-** Guix System
-
-*** Concepts
-
-+ Shepherd services
-
-*** Misc
-+ uses Weblate for translations
-
 ** Transition Process
 
 *** Potential Problems with an Early Switch
@@ -90,24 +75,10 @@ Probably go with Shepherd, Runit or a hybrid system (examine Artix)
 
 *** [[https://github.com/troglobit/finit][finit]]
 
-* Hardware
-
-** udev
-
-- intro to [[https://opensource.com/article/18/11/udev][scripting udev]]
-
 * Kernel
 
-** Configuration
-
-*** [[https://www.kernel.org/doc/html/latest/kbuild/index.html][Kbuild]] kernel build system
-**** [[https://www.kernel.org/doc/html/latest/kbuild/kconfig-language.html][Kconfig]] language
 
 ** Optimizing/Hardening Configs/Flags
-
-+ (ArcoLinux Youtube) [[https://www.youtube.com/watch?v=d9e5rI-OCWU][Comparing configs for Linux, Linux-Zen and Linux-Hardened kernel using diff]]
-+ So much shit in the kernel is _apparently_ not needed
-
 
 *** Hypothetical problems with overeager optimizations
 
