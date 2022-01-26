@@ -44,6 +44,20 @@ There are other "simpicial" chemical structures as well, but there should also
 be terpenoids whose structure satisfies similar "emergence" conditions. Studying
 essential oils in detail would be illuminating.
 
+
+*** Vitamin A
+
+Vitamin A may be a "solution" to a similar problem. The structures of vitamins cannot simply be arbitrary, since any selective advantage or dual roles
+should be strongly selected for. Vitamin A is used in cellular processes (enzymes/etc), but also offers a wide variety of forms (e.g. molecular variants and
+crystal strucutures affecting the color). Astaxanthin has a far higher ORAC value than vitamin A or C. So, this may be a dual purpose to Vitamin A that facilitated its selection.
+
+Furthermore, Vitamin A may have a chemical structure that represents a kind of "free energy landscape vortex" . It would seem to exhibit the property where it may survive encounters 
+with random oxidation reactions -- but far more profound: of the various chemical structures that can result following such oxidation reactions, Vitamin A may display a kind of self-healing
+property, where either its chemical structure or its crystal lattice will cause the mutated Vitamin A molecules to gradually return to their original form after several oxidation reactions.
+
+This would cause it to be over-represented in the species of chemicals available to early life (esp. early plant life), in turn causing it to be a chemical species that is consistently available
+frequently enough to be relied on for chemical/enzymatic processes or the regulation of those proesses.
+
 ** Probabilistic Programs, Beta-Glycans and Mushrooms
 
 *** TODO port over content from my chemistry notebook on beta-glycans
@@ -70,3 +84,61 @@ Have a look at [[https://github.com/bgruening/galaxytools][bgruening/galaxytools
 * Open Babel
 
 [[https://openbabel.org/wiki/XML][Open Babel]] is a tool for working with molecules and stuff. More details needed.
+
+
+* 
+
+** Body Odor (Bromhidrosis)
+
+hmmm my body is processing thiols/etc strangely (I don't remember garlic doing
+this before) [[https://www.racgp.org.au/afp/2013/may/hyperhidrosis-and-bromhidrosis/#7][Guide to asessment and management]]
+
+*** Cotton vs Polyester
+**** [[https://pubmed.ncbi.nlm.nih.gov/25128346/][10.1128/AEM.01422-14]]: Microbial odor profile of polyester and cotton clothes after a fitness session
++ Seven aspects of odor were measured subjectively
+  - hedonic ::
+  - intensity ::
+  - ::
+
+
+[[file:img/synthbio/body-odor-bacteria-strains.jpg][bacterial species]]
+
++ My take: bacterial population distributions grouped by species exhibit
+  profiles (clusters) of population/species. Some species will tend to dominate,
+  pushing others to exclusion; lacking some species or environmental conditions
+  will tend to disrupt the equilibrium of a population profile.
+  - Some species or subspecies will produce specific chemicals, which together produce an odor profile (see above: /five qualitative odor characteristics/)
+  - Altering environmental conditions will upregulate some bacterial processes or chemical processes:
+    - substrate (fabric),
+    - respiration
+    - exercise time
+    - cohabitating species
+    - diet (garlic, or other thiol-containing foods)
+    - electrolytes or sweat composition
+  - The fabric/substrate & overall environmental conditions will greatly affect the mobility of some organic chemical compounds
+    - e.g. phys. properties like boiling point or solvent/solute processes like
+      sublimation
+    - because of these functional couplings...
+      - fabric :: substrate & chemical-specific sublimation
+      - fabric :: respiration & upregulation of bacterial processes yielding chemicals with functional groups
+    - ... then the fabric alters dynamics of the odor's chemical profile, dispersion into the air and olfactory perception
+      - for gustatory senses (taste), functional groups activate
+      - this is similar for olfactory senses:
+        - thiols, in particular, produce the smells of asparagus & garlic in
+          urine, which also share similar smells to other metabolized byproducts
+          containing thiol functional groups (when those by products are
+          somewhat "dispersive" in air)
+
+
+*** Diet: Garlic (and thiol-heavy foods)
+
++ Compound Chem: [[https://www.compoundchem.com/2014/05/05/what-compounds-cause-garlic-breath-the-chemistry-of-garlic/][Chemistry of Wild Garlic]]
+  - [[https://www.sbs.com.au/food/article/2016/11/28/testing-life-hacks-citizen-science-does-stainless-steel-really-get-rid-garlic][Citizen Science: Garlic Smells]]
+
+
+
+* Compound Chem
+
+hmmmmm a site with lots of info on natural chemistry:
++ [[https://www.compoundchem.com/2014/05/05/what-compounds-cause-garlic-breath-the-chemistry-of-garlic/][The Chemistry of Garlic (and Garlic Breath)]]
++ [[https://www.compoundchem.com/2016/04/04/wild-garlic/][The Chemistry of Wild Garlic]]

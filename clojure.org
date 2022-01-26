@@ -41,9 +41,6 @@ https://jacobian.org/2009/nov/10/what-to-write/
 + Clojure CLI
 
 *** Setup environment
-:PROPERTIES:
-:ID:       0f65a19f-731c-4e34-90f7-5d06d361afd4
-:END:
 
 install language and tooling:
 
@@ -77,47 +74,6 @@ clojure -M:project/outdated > $(date +%Y%m%d).org
 ** Main Environment
 
 Setup ~cljs~ and ~shadow-cljs~
-
-#+begin_src shell :tangle no
-### node/npm
-# these are technically AUR packages via chaotic AUR ... build them
-pacman -Syu nodejs npm yarn nvm
-
-### configure for npm
-# NVM now handles this and will not work with this configuration
-# npm config set prefix $HOME/.npm-packages
-
-### ensure shells load nvm code
-# echo 'source /usr/share/nvm/init-nvm.sh' >> .zshenv
-
-### set node version
-# for now, node-gyp blows up on a node-sass build with node v16
-#   - technically, node-sass is deprecated
-#   - but node-sass specifies builds with  CLANG_CXX_LANGUAGE_STANDARD=c++11 instead of c++14
-nvm install 15 # 15.14.0
-nvm use 15 # every single time i use clojurescript.....
-    
-### set default node version
-# to avoid needing to set this in every damn scripting context
-nvm alias default 15
-    
-### shadow-cljs (file watch, tasks, builds, updates to repl/browser)
-npm install -g shadow-cljs
-
-### react tooling
-npm install -g react-cli
-
-### to install dependencies for headless testing
-npm install -g karma-cli
-npm install karma karma-cljs-test karma-chrome-launcher --save-dev
-
-### for node-sass
-pacman -Syu python2
-npm install -g node-sass
-
-### to run tests
-lein doo chrome-headless test once
-#+end_src
 
 ** Emacs Setup
 
